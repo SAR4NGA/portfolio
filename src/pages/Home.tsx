@@ -1,13 +1,30 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
-import { ArrowDown, Mail, ExternalLink, MapPin, Calendar } from 'lucide-react'
+import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList } from 'lucide-react'
 import SectionWrapper from '../components/SectionWrapper'
 import SkillBadge from '../components/SkillBadge'
+import SkillsMarquee from '../components/skills/SkillsMarquee'
+import SkillsCarousel3D from '../components/skills/SkillsCarousel3D'
+import SkillsFloating from '../components/skills/SkillsFloating'
+import SkillsStaggeredReveal from '../components/skills/SkillsStaggeredReveal'
+import ProjectCard from '../components/ProjectCard'
+import ProjectCarousel from '../components/ProjectCarousel'
 import { skills } from '../data/skills'
 import { projects } from '../data/projects'
 import { experiences } from '../data/experience'
 
 const categories = [...new Set(skills.map(s => s.category))]
+
+type AnimationStyle = 'original' | 'marquee' | 'carousel3d' | 'floating' | 'staggered'
+
+const ANIMATION_LABELS: { key: AnimationStyle; label: string }[] = [
+  { key: 'original', label: 'Original' },
+  { key: 'marquee', label: 'Marquee' },
+  { key: 'carousel3d', label: '3D Carousel' },
+  { key: 'floating', label: 'Floating' },
+  { key: 'staggered', label: 'Staggered' },
+]
 
 function GithubIcon({ size = 16 }: { size?: number }) {
   return (
@@ -26,6 +43,41 @@ function LinkedinIcon({ size = 16 }: { size?: number }) {
 }
 
 export default function Home() {
+  const [animationStyle, setAnimationStyle] = useState<AnimationStyle>('original')
+  const [projectView, setProjectView] = useState<'grid' | 'carousel'>('carousel')
+
+  const renderSkills = () => {
+    switch (animationStyle) {
+      case 'marquee':
+        return <SkillsMarquee skills={skills} />
+      case 'carousel3d':
+        return <SkillsCarousel3D skills={skills} />
+      case 'floating':
+        return <SkillsFloating skills={skills} />
+      case 'staggered':
+        return <SkillsStaggeredReveal skills={skills} />
+      default:
+        return (
+          <>
+            {categories.map(category => (
+              <div key={category} className="mb-10 last:mb-0">
+                <h3 className="mb-4 font-mono text-xs font-medium tracking-wider text-gray-500 dark:text-gray-500 uppercase">
+                  {category}
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {skills
+                    .filter(s => s.category === category)
+                    .map((skill, i) => (
+                      <SkillBadge key={skill.name} {...skill} index={i} />
+                    ))}
+                </div>
+              </div>
+            ))}
+          </>
+        )
+    }
+  }
+
   return (
     <>
       <Helmet>
@@ -33,7 +85,7 @@ export default function Home() {
       </Helmet>
 
       {/* Hero */}
-      <section className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center">
+      <section className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center overflow-x-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 animate-gradient dark:from-gray-950 dark:via-gray-900 dark:to-blue-950" />
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
           <motion.p
@@ -51,8 +103,8 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mb-4 font-bold tracking-tight text-gray-900 dark:text-white"
         >
-            <span className="text-7xl sm:text-8xl text-gray-400 dark:text-gray-600">PASINDU</span>
-            <span className="ml-4 text-8xl sm:text-9xl underline decoration-2 ">SARANGA</span>
+            <span className="text-hero-sm text-gray-400 dark:text-gray-600">PASINDU</span>
+            <span className="ml-4 text-hero-lg underline decoration-2">SARANGA</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -133,20 +185,22 @@ export default function Home() {
 
       {/* Skills */}
       <SectionWrapper id="skills" title="Skills" subtitle="Technologies I work with" className="bg-gray-50 dark:bg-gray-900/50">
-        {categories.map(category => (
-          <div key={category} className="mb-10 last:mb-0">
-            <h3 className="mb-4 font-mono text-xs font-medium tracking-wider text-gray-500 dark:text-gray-500 uppercase">
-              {category}
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              {skills
-                .filter(s => s.category === category)
-                .map((skill, i) => (
-                  <SkillBadge key={skill.name} {...skill} index={i} />
-                ))}
-            </div>
-          </div>
-        ))}
+        <div className="mb-8 flex flex-wrap justify-center gap-2">
+          {ANIMATION_LABELS.map(({ key, label }) => (
+            <button
+              key={key}
+              onClick={() => setAnimationStyle(key)}
+              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                animationStyle === key
+                  ? 'bg-blue-600 text-white dark:bg-blue-500'
+                  : 'bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        {renderSkills()}
       </SectionWrapper>
 
       {/* Experience */}
@@ -185,51 +239,40 @@ export default function Home() {
 
       {/* Projects */}
       <SectionWrapper id="projects" title="Projects" subtitle="Things I've built" className="bg-gray-50 dark:bg-gray-900/50">
-        <div className="grid gap-6 sm:grid-cols-2">
-          {projects.map((project, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="group rounded-xl border border-gray-200 bg-white p-6 transition-all hover:border-blue-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-950 dark:hover:border-blue-700"
-            >
-              <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">{project.title}</h3>
-              <p className="mb-4 text-base text-gray-600 dark:text-gray-400">{project.description}</p>
-              <div className="mb-4 flex flex-wrap gap-2">
-                {project.tech.map(tech => (
-                  <span
-                    key={tech}
-                    className="rounded-full bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-400"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <div className="flex items-center gap-4">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-base font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
-                >
-                  <GithubIcon size={16} /> Code
-                </a>
-                {project.demo && (
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-base font-medium text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
-                  >
-                    <ExternalLink size={16} /> Demo
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          ))}
+        <div className="mb-6 flex items-center justify-end gap-1">
+          <button
+            onClick={() => setProjectView('grid')}
+            className={`rounded-lg p-2 transition-colors ${
+              projectView === 'grid'
+                ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
+                : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+            }`}
+            aria-label="Grid view"
+          >
+            <LayoutGrid size={18} />
+          </button>
+          <button
+            onClick={() => setProjectView('carousel')}
+            className={`rounded-lg p-2 transition-colors ${
+              projectView === 'carousel'
+                ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
+                : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
+            }`}
+            aria-label="Carousel view"
+          >
+            <LayoutList size={18} />
+          </button>
         </div>
+
+        {projectView === 'carousel' ? (
+          <ProjectCarousel projects={projects} />
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2">
+            {projects.map((project, i) => (
+              <ProjectCard key={project.title} project={project} index={i} />
+            ))}
+          </div>
+        )}
       </SectionWrapper>
 
       {/* Contact */}
