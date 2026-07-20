@@ -4,37 +4,95 @@ export interface Project {
   tech: string[]
   github: string
   demo?: string
+  image?: string
 }
 
 export const projects: Project[] = [
   {
-    title: 'E-Commerce Platform',
-    description:
-      'A full-stack e-commerce application with user authentication, product catalog, cart, checkout flow, and admin dashboard. Features server-side rendering and optimized performance.',
-    tech: ['Next.js', 'TypeScript', 'PostgreSQL', 'Tailwind CSS', 'Stripe'],
-    github: 'https://github.com/yourusername/ecommerce',
-    demo: 'https://ecommerce-demo.vercel.app',
+    title: "LiteReader",
+    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
+    tech: [
+      "HTML",
+      "Kotlin"
+    ],
+    github: "https://github.com/SAR4NGA/liteReader"
   },
   {
-    title: 'Task Management API',
-    description:
-      'RESTful API for task management with real-time updates via WebSockets. Includes role-based access control, file uploads, and comprehensive test coverage.',
-    tech: ['Node.js', 'Express', 'MongoDB', 'Socket.io', 'Docker'],
-    github: 'https://github.com/yourusername/task-api',
+    title: "DeepSeekV4Pro Token Optimizer",
+    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
+    tech: [
+      "TypeScript"
+    ],
+    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer"
   },
   {
-    title: 'Weather Dashboard',
-    description:
-      'Beautiful weather dashboard with location search, 7-day forecast, interactive charts, and dynamic backgrounds based on weather conditions.',
-    tech: ['React', 'TypeScript', 'Chart.js', 'OpenWeather API'],
-    github: 'https://github.com/yourusername/weather',
-    demo: 'https://weather-dash.netlify.app',
+    title: "FinancialTracker",
+    description: "A simple financial tracking web application built using ASP.NET Core Razor Pages. This project is build to help me to track my expences and incomes.It can track,categorize and summerize my main expenses and incomes. Then Thought it'll be helpful to others too.",
+    tech: [
+      "C#",
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    github: "https://github.com/SAR4NGA/financialTracker"
   },
   {
-    title: 'Developer Blog Starter',
-    description:
-      'A minimal, performant blog starter with MDX support, syntax highlighting, RSS feed, and SEO optimization. Perfect for technical writing.',
-    tech: ['Astro', 'MDX', 'Tailwind CSS', 'RSS'],
-    github: 'https://github.com/yourusername/dev-blog',
+    title: "Inflex Mobile",
+    description: "",
+    tech: [
+      "Dart",
+      "C++",
+      "CMake",
+      "Swift",
+      "C",
+      "HTML",
+      "Kotlin",
+      "Objective-C"
+    ],
+    github: "https://github.com/SAR4NGA/inflex_mobile"
   },
+  {
+    title: "Busapp",
+    description: "",
+    tech: [
+      "Dart",
+      "HTML",
+      "Swift",
+      "Kotlin",
+      "Objective-C"
+    ],
+    github: "https://github.com/SAR4NGA/busapp"
+  },
+  {
+    title: "Network Monitor",
+    description: "A lightweight, unobtrusive desktop network monitoring application for Windows. It provides a transparent, click-through widget to track your upload and download speeds in real-time, coupled with a background Windows service that continually logs data usage.",
+    tech: [
+      "Python",
+      "VBScript"
+    ],
+    github: "https://github.com/SAR4NGA/Network_Monitor"
+  },
+  {
+    title: "LiteCordChat",
+    description: "liteCordChat is a high-performance, low-bandwidth voice coordination engine designed for users with limited data quotas and low-end hardware. It provides a \"zero-friction, zero-trace\" experience by eliminating mandatory accounts and social media bloat, focusing strictly on real-time team communication. ",
+    tech: [
+      "TypeScript",
+      "Python",
+      "CSS",
+      "HTML"
+    ],
+    github: "https://github.com/SAR4NGA/liteCordChat"
+  },
+  {
+    title: "ADBMS Project",
+    description: "",
+    tech: [
+      "JavaScript",
+      "TSQL",
+      "CSS",
+      "HTML",
+      "Dockerfile"
+    ],
+    github: "https://github.com/SAR4NGA/ADBMS_project"
+  }
 ]
