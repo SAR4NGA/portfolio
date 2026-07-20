@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { Menu, X, Sun, Moon } from 'lucide-react'
-import { motion, useMotionValue, animate } from 'framer-motion'
+import { motion, useMotionValue, animate, useTransform, type MotionValue } from 'framer-motion'
 import { useTheme } from '../hooks/useTheme'
 
 const sectionIds = ['about', 'skills', 'experience', 'projects', 'contact']
@@ -27,13 +27,21 @@ export default function Navbar() {
 
   const barsRef = useRef(
     sectionIds.reduce((acc, id) => {
-      acc[id] = {
-        left: useMotionValue('0%'),
-        width: useMotionValue('0%'),
-      }
+      acc[id] = { sweep: useMotionValue(0) }
       return acc
-    }, {} as Record<string, { left: ReturnType<typeof useMotionValue>; width: ReturnType<typeof useMotionValue> }>)
+    }, {} as Record<string, { sweep: MotionValue<number> }>)
   )
+
+  const derivedRef = useRef<Record<string, { left: MotionValue<string>; width: MotionValue<string> }>>({})
+
+  for (const id of sectionIds) {
+    const sweep = barsRef.current[id].sweep
+    // sweep 0–100:  left-anchored growth  → left: 0%, width: s%
+    // sweep 100–200: right-anchored shrink → left: (s-100)%, width: (200-s)%
+    const left = useTransform(sweep, (s: number) => (s <= 100 ? '0%' : `${s - 100}%`))
+    const width = useTransform(sweep, (s: number) => (s <= 100 ? `${s}%` : `${200 - s}%`))
+    derivedRef.current[id] = { left, width }
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,13 +56,16 @@ export default function Navbar() {
         const el = document.getElementById(id)
         if (!el) {
           nextPhases[id] = 'idle'
-          animate(barsRef.current[id].left, '0%', springConfig)
-          animate(barsRef.current[id].width, '0%', springConfig)
+          animate(barsRef.current[id].sweep, 0, springConfig)
           continue
         }
 
         const rect = el.getBoundingClientRect()
         const sectionCenter = rect.top + rect.height / 2
+        // distance > 0: section center is still BELOW viewport center
+        //   → scrolling down hasn't reached it yet → approaching → 'enter'
+        // distance < 0: section center is ABOVE viewport center
+        //   → scrolling down has already passed it → receding → 'exit'
         const distance = sectionCenter - viewportCenter
         const half = rect.height / 2 + vh * 0.2
         const absDist = Math.abs(distance)
@@ -64,11 +75,13 @@ export default function Navbar() {
 
         nextPhases[id] = phase
 
-        const targetLeft = phase === 'exit' ? `${(1 - progress) * 100}%` : '0%'
-        const targetWidth = `${progress * 100}%`
+        // distance < 0 (section above center): right-anchored, sweep 100→200
+        // distance >= 0 (section at/below center): left-anchored, sweep 0→100
+        const targetSweep = distance < 0
+          ? 100 + (1 - progress) * 100
+          : progress * 100
 
-        animate(barsRef.current[id].left, targetLeft, springConfig)
-        animate(barsRef.current[id].width, targetWidth, springConfig)
+        animate(barsRef.current[id].sweep, targetSweep, springConfig)
 
         if (progress > bestProgress) {
           bestProgress = progress
@@ -132,8 +145,8 @@ export default function Navbar() {
                 <motion.div
                   className="absolute bottom-0 h-0.5 rounded-full bg-blue-600 dark:bg-blue-400"
                   style={{
-                    left: barsRef.current[link.id].left,
-                    width: barsRef.current[link.id].width,
+                    left: derivedRef.current[link.id].left,
+                    width: derivedRef.current[link.id].width,
                   }}
                 />
               </button>
