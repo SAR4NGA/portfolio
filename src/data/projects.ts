@@ -9,34 +9,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "LiteReader",
-    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
-    tech: [
-      "HTML",
-      "Kotlin"
-    ],
-    github: "https://github.com/SAR4NGA/liteReader"
-  },
-  {
-    title: "DeepSeekV4Pro Token Optimizer",
-    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
-    tech: [
-      "TypeScript"
-    ],
-    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer"
-  },
-  {
-    title: "FinancialTracker",
-    description: "A simple financial tracking web application built using ASP.NET Core Razor Pages. This project is build to help me to track my expences and incomes.It can track,categorize and summerize my main expenses and incomes. Then Thought it'll be helpful to others too.",
-    tech: [
-      "C#",
-      "HTML",
-      "CSS",
-      "JavaScript"
-    ],
-    github: "https://github.com/SAR4NGA/financialTracker"
-  },
-  {
     title: "Inflex Mobile",
     description: "",
     tech: [
@@ -52,16 +24,44 @@ export const projects: Project[] = [
     github: "https://github.com/SAR4NGA/inflex_mobile"
   },
   {
-    title: "Busapp",
+    title: "LiteReader",
+    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
+    tech: [
+      "HTML",
+      "Kotlin"
+    ],
+    github: "https://github.com/SAR4NGA/liteReader"
+  },
+  {
+    title: "ADBMS Project",
     description: "",
     tech: [
-      "Dart",
+      "JavaScript",
+      "TSQL",
+      "CSS",
       "HTML",
-      "Swift",
-      "Kotlin",
-      "Objective-C"
+      "Dockerfile"
     ],
-    github: "https://github.com/SAR4NGA/busapp"
+    github: "https://github.com/SAR4NGA/ADBMS_project"
+  },
+  {
+    title: "FinancialTracker",
+    description: "A simple financial tracking web application built using ASP.NET Core Razor Pages. This project is build to help me to track my expences and incomes.It can track,categorize and summerize my main expenses and incomes. Then Thought it'll be helpful to others too.",
+    tech: [
+      "C#",
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    github: "https://github.com/SAR4NGA/financialTracker"
+  },
+  {
+    title: "DeepSeekV4Pro Token Optimizer",
+    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
+    tech: [
+      "TypeScript"
+    ],
+    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer"
   },
   {
     title: "Network Monitor",
@@ -84,15 +84,15 @@ export const projects: Project[] = [
     github: "https://github.com/SAR4NGA/liteCordChat"
   },
   {
-    title: "ADBMS Project",
+    title: "Busapp",
     description: "",
     tech: [
-      "JavaScript",
-      "TSQL",
-      "CSS",
+      "Dart",
       "HTML",
-      "Dockerfile"
+      "Swift",
+      "Kotlin",
+      "Objective-C"
     ],
-    github: "https://github.com/SAR4NGA/ADBMS_project"
+    github: "https://github.com/SAR4NGA/busapp"
   }
 ]
