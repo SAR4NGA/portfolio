@@ -58,3 +58,19 @@ body,
 .perspective-500 {
   perspective: 500px;
 }
+
+@keyframes button-shine {
+  0% {
+    transform: translateX(-200%) skewX(12deg);
+  }
+  20% {
+    transform: translateX(200%) skewX(12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(12deg);
+  }
+}
+
+.animate-button-shine {
+  animation: button-shine 5s ease-out infinite;
+}
