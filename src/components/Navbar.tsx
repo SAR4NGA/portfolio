@@ -39,7 +39,10 @@ export default function Navbar() {
     // sweep 0–100:  left-anchored growth  → left: 0%, width: s%
     // sweep 100–200: right-anchored shrink → left: (s-100)%, width: (200-s)%
     const left = useTransform(sweep, (s: number) => (s <= 100 ? '0%' : `${s - 100}%`))
-    const width = useTransform(sweep, (s: number) => (s <= 100 ? `${s}%` : `${200 - s}%`))
+    const width = useTransform(sweep, (s: number) => {
+      const w = s <= 100 ? s : 200 - s
+      return w < 3 ? '0%' : `${w}%`
+    })
     derivedRef.current[id] = { left, width }
   }
 
@@ -56,7 +59,7 @@ export default function Navbar() {
         const el = document.getElementById(id)
         if (!el) {
           nextPhases[id] = 'idle'
-          animate(barsRef.current[id].sweep, 0, springConfig)
+          barsRef.current[id].sweep.set(0)
           continue
         }
 
@@ -81,7 +84,7 @@ export default function Navbar() {
           ? 100 + (1 - progress) * 100
           : progress * 100
 
-        animate(barsRef.current[id].sweep, targetSweep, springConfig)
+        barsRef.current[id].sweep.set(targetSweep)
 
         if (progress > bestProgress) {
           bestProgress = progress
@@ -89,8 +92,10 @@ export default function Navbar() {
         }
       }
 
-      if (bestSection) {
+      if (bestSection && window.scrollY > 0) {
         setActiveSection(prev => (prev !== bestSection ? bestSection : prev))
+      } else if (window.scrollY === 0) {
+        setActiveSection('')
       }
 
       setPhases(prev => {

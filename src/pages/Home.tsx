@@ -3,28 +3,12 @@ import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList } from 'lucide-react'
 import SectionWrapper from '../components/SectionWrapper'
-import SkillBadge from '../components/SkillBadge'
 import SkillsMarquee from '../components/skills/SkillsMarquee'
-import SkillsCarousel3D from '../components/skills/SkillsCarousel3D'
-import SkillsFloating from '../components/skills/SkillsFloating'
-import SkillsStaggeredReveal from '../components/skills/SkillsStaggeredReveal'
 import ProjectCard from '../components/ProjectCard'
 import ProjectCarousel from '../components/ProjectCarousel'
 import { skills } from '../data/skills'
 import { projects } from '../data/projects'
 import { experiences } from '../data/experience'
-
-const categories = [...new Set(skills.map(s => s.category))]
-
-type AnimationStyle = 'original' | 'marquee' | 'carousel3d' | 'floating' | 'staggered'
-
-const ANIMATION_LABELS: { key: AnimationStyle; label: string }[] = [
-  { key: 'original', label: 'Original' },
-  { key: 'marquee', label: 'Marquee' },
-  { key: 'carousel3d', label: '3D Carousel' },
-  { key: 'floating', label: 'Floating' },
-  { key: 'staggered', label: 'Staggered' },
-]
 
 function GithubIcon({ size = 16 }: { size?: number }) {
   return (
@@ -43,40 +27,7 @@ function LinkedinIcon({ size = 16 }: { size?: number }) {
 }
 
 export default function Home() {
-  const [animationStyle, setAnimationStyle] = useState<AnimationStyle>('original')
   const [projectView, setProjectView] = useState<'grid' | 'carousel'>('carousel')
-
-  const renderSkills = () => {
-    switch (animationStyle) {
-      case 'marquee':
-        return <SkillsMarquee skills={skills} />
-      case 'carousel3d':
-        return <SkillsCarousel3D skills={skills} />
-      case 'floating':
-        return <SkillsFloating skills={skills} />
-      case 'staggered':
-        return <SkillsStaggeredReveal skills={skills} />
-      default:
-        return (
-          <>
-            {categories.map(category => (
-              <div key={category} className="mb-10 last:mb-0">
-                <h3 className="mb-4 font-mono text-xs font-medium tracking-wider text-gray-500 dark:text-gray-500 uppercase">
-                  {category}
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {skills
-                    .filter(s => s.category === category)
-                    .map((skill, i) => (
-                      <SkillBadge key={skill.name} {...skill} index={i} />
-                    ))}
-                </div>
-              </div>
-            ))}
-          </>
-        )
-    }
-  }
 
   return (
     <>
@@ -120,8 +71,22 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mb-8 max-w-md mx-auto text-lg text-gray-500 dark:text-gray-500"
           >
-            I build things for the web — clean, performant, and accessible.
+            From coursework to full stack systems, I like turning messy requirements into software that actually works.
           </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mb-6"
+          >
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-green-200 bg-green-50 px-3 py-1 text-xs font-medium text-green-700 dark:border-green-900 dark:bg-green-950/30 dark:text-green-400">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+              </span>
+              Open to internship opportunities
+            </span>
+          </motion.div>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -130,15 +95,23 @@ export default function Home() {
           >
             <a
               href="#contact"
-              className="rounded-full bg-gray-900 px-6 py-2.5 text-base font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+              className="group relative overflow-hidden rounded-full bg-gray-900 px-6 py-2.5 text-base font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
             >
-              Get in touch
+              <span className="relative z-10">Get in touch</span>
+              <span className="absolute inset-0 -translate-x-full skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent dark:via-gray-900/25 animate-button-shine" />
             </a>
             <a
               href="#about"
-              className="rounded-full border border-gray-300 px-6 py-2.5 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-blue-200 px-6 py-2.5 text-base font-medium text-gray-700 dark:bg-blue-800 dark:text-gray-300"
             >
-              Learn more
+              <div className="absolute left-1/2 top-1/2 aspect-square w-[300%] -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <span
+                  className="absolute inset-0 animate-spin [animation-duration:3s]"
+                  style={{ background: 'conic-gradient(from 0deg, transparent 0%, #3b82f6 20%, transparent 40%)' }}
+                />
+              </div>
+              <span className="absolute inset-[1px] rounded-full bg-white transition-colors dark:bg-gray-950" />
+              <span className="relative z-10">Learn more</span>
             </a>
           </motion.div>
         </div>
@@ -185,22 +158,7 @@ export default function Home() {
 
       {/* Skills */}
       <SectionWrapper id="skills" title="Skills" subtitle="Technologies I work with" className="bg-gray-50 dark:bg-gray-900/50">
-        <div className="mb-8 flex flex-wrap justify-center gap-2">
-          {ANIMATION_LABELS.map(({ key, label }) => (
-            <button
-              key={key}
-              onClick={() => setAnimationStyle(key)}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-                animationStyle === key
-                  ? 'bg-blue-600 text-white dark:bg-blue-500'
-                  : 'bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-        {renderSkills()}
+        <SkillsMarquee skills={skills} />
       </SectionWrapper>
 
       {/* Experience */}
