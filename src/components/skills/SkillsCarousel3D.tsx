@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useAnimationFrame } from 'framer-motion'
 import type { Skill } from '../../data/skills'
+import SkillIcon from '../SkillIcon'
 
 interface SkillsCarousel3DProps {
   skills: Skill[]
@@ -18,7 +19,7 @@ function CarouselCard({ skill, index, total }: { skill: Skill; index: number; to
       }}
     >
       <div className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm transition-shadow hover:shadow-lg dark:border-gray-700 dark:bg-gray-900">
-        <span className="text-3xl">{skill.icon}</span>
+        <SkillIcon name={skill.icon} size={32} />
         <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{skill.name}</span>
       </div>
     </div>

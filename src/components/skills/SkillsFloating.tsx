@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import type { Skill } from '../../data/skills'
+import SkillIcon from '../SkillIcon'
 
 interface SkillsFloatingProps {
   skills: Skill[]
@@ -38,7 +39,7 @@ function FloatingBadge({ skill, index }: { skill: Skill; index: number }) {
         },
       }}
     >
-      <span className="text-lg">{skill.icon}</span>
+      <SkillIcon name={skill.icon} size={20} />
       {skill.name}
     </motion.span>
   )
