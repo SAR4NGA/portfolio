@@ -3,12 +3,12 @@ import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList } from 'lucide-react'
 import SectionWrapper from '../components/SectionWrapper'
-import SkillsMarquee from '../components/skills/SkillsMarquee'
+import SkillsGrid from '../components/skills/SkillsGrid'
 import ProjectCard from '../components/ProjectCard'
 import ProjectCarousel from '../components/ProjectCarousel'
 import { skills } from '../data/skills'
 import { projects } from '../data/projects'
-import { experiences } from '../data/experience'
+import { certifications } from '../data/certifications'
 
 function GithubIcon({ size = 16 }: { size?: number }) {
   return (
@@ -139,11 +139,10 @@ export default function Home() {
           </div>
           <div className="space-y-4 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
             <p>
-              I&apos;m a Software Engineering undergraduate passionate about building products that make a difference. I specialize in full-stack web development with a focus on creating clean, performant user experiences.
+              I&apos;m a Software Engineering undergrad building products that make a difference. I focus on full-stack web development, with an eye for clean, performant user experiences.
             </p>
             <p>
-              When I&apos;m not coding, you can find me reading about system design, contributing to open-source projects, or experimenting with new technologies. I believe in writing code that is as readable as it is functional.
-            </p>
+My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to lightweight desktop tools. I care about writing code that's as readable as it is functional.            </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <span className="inline-flex items-center gap-1.5 text-base text-gray-500 dark:text-gray-500">
                 <MapPin size={14} /> Colombo, Sri Lanka
@@ -157,14 +156,14 @@ export default function Home() {
       </SectionWrapper>
 
       {/* Skills */}
-      <SectionWrapper id="skills" title="Skills" subtitle="Technologies I work with" className="bg-gray-50 dark:bg-gray-900/50">
-        <SkillsMarquee skills={skills} />
+      <SectionWrapper id="skills" title="Skills" subtitle="Technologies I worked with" className="bg-gray-50 dark:bg-gray-900/50">
+        <SkillsGrid skills={skills} />
       </SectionWrapper>
 
-      {/* Experience */}
-      <SectionWrapper id="experience" title="Experience" subtitle="Where I've worked">
+      {/* Certifications */}
+      <SectionWrapper id="certifications" title="Certifications" subtitle="What I've achieved">
         <div className="relative space-y-10 before:absolute before:left-[15px] before:top-2 before:h-[calc(100%-2.5rem)] before:w-px before:bg-gray-200 dark:before:bg-gray-800">
-          {experiences.map((exp, i) => (
+          {certifications.map((cert, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, x: -24 }}
@@ -174,21 +173,38 @@ export default function Home() {
               className="relative flex gap-6"
             >
               <div className="relative mt-1.5 h-3 w-3 shrink-0 rounded-full border-2 border-blue-600 bg-white dark:border-blue-400 dark:bg-gray-950" />
-              <div className="rounded-xl border border-gray-200 p-6 transition-colors hover:border-blue-200 dark:border-gray-800 dark:hover:border-blue-800">
-                <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{exp.role}</h3>
-                  <span className="text-base text-blue-600 dark:text-blue-400">@ {exp.company}</span>
+              <div className="flex-1 rounded-xl border border-gray-200 overflow-hidden transition-colors hover:border-blue-200 dark:border-gray-800 dark:hover:border-blue-800">
+                <div className="flex flex-col sm:flex-row">
+                  {/* Text content */}
+                  <div className="flex-1 min-w-0 p-6">
+                    <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{cert.title}</h3>
+                      <span className="text-base text-blue-600 dark:text-blue-400">@ {cert.issuer}</span>
+                    </div>
+                    <p className="mb-3 font-mono text-sm text-gray-500 dark:text-gray-500">{cert.date}</p>
+                    <p className="mb-3 text-base text-gray-600 dark:text-gray-400">{cert.description}</p>
+                    {cert.skills && cert.skills.length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {cert.skills.map((skill, j) => (
+                          <span key={j} className="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {/* Certificate image — flush to the card edge */}
+                  {cert.image && (
+                    <div className="shrink-0 sm:w-64 md:w-80">
+                      <img
+                        src={cert.image}
+                        alt={`${cert.title} certificate`}
+                        className="h-full w-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                        onClick={() => window.open(cert.image, '_blank')}
+                      />
+                    </div>
+                  )}
                 </div>
-                <p className="mb-3 font-mono text-sm text-gray-500 dark:text-gray-500">{exp.period}</p>
-                <p className="mb-3 text-base text-gray-600 dark:text-gray-400">{exp.description}</p>
-                <ul className="space-y-1.5">
-                  {exp.highlights.map((h, j) => (
-                    <li key={j} className="flex items-start gap-2 text-base text-gray-600 dark:text-gray-400">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600 dark:bg-blue-400" />
-                      {h}
-                    </li>
-                  ))}
-                </ul>
               </div>
             </motion.div>
           ))}
