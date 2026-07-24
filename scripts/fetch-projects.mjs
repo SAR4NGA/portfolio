@@ -16,12 +16,18 @@ function shuffle(arr) {
 }
 
 async function main() {
-  console.log(`Fetching repos for ${GH_USER}...`)
   const res = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`)
   const repos = await res.json()
+  if (!Array.isArray(repos)) {
+    console.warn(`GitHub API limit or error:`, repos?.message || repos)
+    console.warn(`Using existing src/data/projects.ts dataset.`)
+    return
+  }
 
   const filtered = repos.filter(r => !r.fork && !EXCLUDE.includes(r.name))
+
   console.log(`Found ${filtered.length} repos (excluding forks, portfolio, profile)`)
+
 
   const projects = []
 
