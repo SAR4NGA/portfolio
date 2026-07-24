@@ -1,25 +1,25 @@
 import { useLocation } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { Menu, X, Sun, Moon } from 'lucide-react'
-import { motion, useMotionValue, animate, useTransform, type MotionValue } from 'framer-motion'
+import { motion, useMotionValue, useTransform, type MotionValue } from 'framer-motion'
 import { useTheme } from '../hooks/useTheme'
 
-const sectionIds = ['about', 'skills', 'experience', 'projects', 'contact']
+const sectionIds = ['about', 'skills', 'certifications', 'projects', 'contact']
 
 const navLinks = [
   { href: '/#about', label: 'About', id: 'about' },
   { href: '/#skills', label: 'Skills', id: 'skills' },
-  { href: '/#experience', label: 'Experience', id: 'experience' },
+  { href: '/#certifications', label: 'Certifications', id: 'certifications' },
   { href: '/#projects', label: 'Projects', id: 'projects' },
   { href: '/#contact', label: 'Contact', id: 'contact' },
 ]
 
-const springConfig = { type: 'spring', stiffness: 120, damping: 24 } as const
+
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
-  const [phases, setPhases] = useState<Record<string, 'enter' | 'exit' | 'idle'>>({})
+  const [, setPhases] = useState<Record<string, 'enter' | 'exit' | 'idle'>>({})
   const { theme, toggleTheme } = useTheme()
   const location = useLocation()
   const isHome = location.pathname === '/'
