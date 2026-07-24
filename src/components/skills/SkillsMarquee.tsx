@@ -6,39 +6,46 @@ interface SkillsMarqueeProps {
   skills: Skill[]
 }
 
-const categoryOrder = ['Frontend', 'Backend', 'Tools']
+const categories = ['Frontend', 'Backend', 'Tools']
 
-function MarqueeRow({ category, skills }: { category: string; skills: Skill[] }) {
-  const doubled = [...skills, ...skills]
+function MarqueeRow({
+  category,
+  skills,
+  reverse = false,
+}: {
+  category: string
+  skills: Skill[]
+  reverse?: boolean
+}) {
+  const doubled = [...skills, ...skills, ...skills]
 
   return (
     <div>
-      <h3 className="mb-4 font-mono text-xs font-medium tracking-wider text-gray-500 dark:text-gray-500 uppercase">
+      <h3 className="mb-3 font-mono text-xs font-bold tracking-widest text-gray-500 dark:text-gray-400 uppercase">
         {category}
       </h3>
-      <div className="group relative overflow-hidden py-4">
-        <div className="relative flex overflow-hidden">
-          <div className="animate-marquee flex shrink-0 gap-4 pr-4">
+      <div className="group relative overflow-hidden py-2">
+        {/* Side gradient fade masks */}
+        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-12 bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-900/80" />
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-12 bg-gradient-to-l from-gray-50 to-transparent dark:from-gray-900/80" />
+
+        <div className="flex overflow-hidden">
+          <div
+            className={`flex shrink-0 gap-6 pr-6 group-hover:[animation-play-state:paused] ${
+              reverse ? 'animate-marquee-reverse' : 'animate-marquee'
+            }`}
+          >
             {doubled.map((skill, i) => (
-              <motion.span
+              <motion.div
                 key={`${skill.name}-${i}`}
                 whileHover={{ scale: 1.1, y: -4 }}
-                className="inline-flex shrink-0 cursor-default items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-5 py-2.5 text-base font-medium text-gray-700 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-300 dark:hover:border-blue-600 dark:hover:bg-blue-950 dark:hover:text-blue-300"
+                className="flex shrink-0 flex-col items-center justify-center p-3 sm:p-4 min-w-[90px] sm:min-w-[100px] rounded-2xl bg-white/70 dark:bg-gray-800/70 border border-gray-200/60 dark:border-gray-700/60 shadow-sm transition-colors cursor-default hover:border-blue-300 dark:hover:border-blue-600"
               >
-                <SkillIcon name={skill.icon} size={20} />
-                {skill.name}
-              </motion.span>
-            ))}
-          </div>
-          <div className="animate-marquee2 flex shrink-0 gap-4 pr-4" aria-hidden>
-            {doubled.map((skill, i) => (
-              <span
-                key={`dup-${skill.name}-${i}`}
-                className="inline-flex shrink-0 items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-5 py-2.5 text-base font-medium text-gray-700 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-300"
-              >
-                <SkillIcon name={skill.icon} size={20} />
-                {skill.name}
-              </span>
+                <SkillIcon name={skill.icon} size={48} />
+                <span className="mt-2 text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-gray-600 dark:text-gray-400">
+                  {skill.name}
+                </span>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -48,21 +55,21 @@ function MarqueeRow({ category, skills }: { category: string; skills: Skill[] })
 }
 
 export default function SkillsMarquee({ skills }: SkillsMarqueeProps) {
-  const grouped = categoryOrder
-    .map(cat => ({ category: cat, items: skills.filter(s => s.category === cat) }))
-    .filter(g => g.items.length > 0)
+  const grouped = categories.map(cat => ({
+    category: cat,
+    items: skills.filter(s => s.category === cat),
+  }))
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="space-y-10"
-    >
-      {grouped.map(({ category, items }) => (
-        <MarqueeRow key={category} category={category} skills={items} />
+    <div className="space-y-6">
+      {grouped.map(({ category, items }, index) => (
+        <MarqueeRow
+          key={category}
+          category={category}
+          skills={items}
+          reverse={index % 2 === 1}
+        />
       ))}
-    </motion.div>
+    </div>
   )
 }
