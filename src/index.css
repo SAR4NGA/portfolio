@@ -6,6 +6,8 @@
   --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'Lora', ui-serif, Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-display: 'Syne', sans-serif;
+  --font-unbounded: 'Unbounded', sans-serif;
   --text-hero-sm: clamp(1.25rem, 4.5vw, 3.5rem);
   --text-hero-lg: clamp(1.75rem, 6.5vw, 5rem);
 }

@@ -43,25 +43,25 @@ export default function Home() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-4 font-mono text-blue-600 dark:text-blue-400"
+            className=" mb-1 font-mono text-blue-600 dark:text-blue-400"
           >
-            <span className="text-5xl">Hello,</span>{' '}
-            <span className="text-4xl">I&apos;m</span>
+            <span className="text-4xl">Hello,</span>{' '}
+            <span className="text-3xl">I&apos;m</span>
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-4 font-bold tracking-tight text-gray-900 dark:text-white"
-        >
-            <span className="text-hero-sm text-gray-400 dark:text-gray-600">PASINDU</span>
-            <span className="ml-4 text-hero-lg underline decoration-2">SARANGA</span>
+            className="mb-2 font-extrabold tracking-tight text-gray-900 dark:text-white"
+          >
+            <span className="text-5xl font-extrabold text-gray-700 dark:text-gray-300">PASINDU</span>
+            <span className="ml-4 text-6xl font-black text-gray-900 dark:text-white underline decoration-2">SARANGA</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mb-2 text-3xl text-gray-600 dark:text-gray-400"
+            className="mb-6 text-md text-gray-800 dark:text-gray-400"
           >
             Software Engineering Undergraduate
           </motion.p>
