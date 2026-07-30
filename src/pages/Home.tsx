@@ -133,9 +133,11 @@ export default function Home() {
       <SectionWrapper id="about" title="About" subtitle="A little about me">
         <div className="grid gap-10 md:grid-cols-[1fr_2fr] items-start">
           <div className="flex justify-center md:justify-start">
-            <div className="h-40 w-40 rounded-2xl bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-4xl">
-              👤
-            </div>
+            <img
+              src="/profile.png"
+              alt="Profile"
+              className="w-full max-w-[280px] aspect-square rounded-2xl object-cover shadow-xl border-4 border-white dark:border-gray-800 transition-transform duration-300 hover:scale-[1.02]"
+            />
           </div>
           <div className="space-y-4 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
             <p>
