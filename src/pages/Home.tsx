@@ -269,7 +269,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
               <Mail size={16} /> hello@yourdomain.dev
             </a>
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/SAR4NGA"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
@@ -277,7 +277,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
               <GithubIcon size={16} /> GitHub
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/sar4nga"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
