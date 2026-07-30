@@ -53,7 +53,21 @@ export default function Home() {
         onMouseMove={handleMouseMove}
         className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center overflow-x-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 animate-gradient dark:from-gray-950 dark:via-gray-900 dark:to-blue-950" />
+        {/* Base background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-50 dark:from-[#0a0e17] dark:via-[#0b1120] dark:to-[#0a0f1a]" />
+
+        {/* Light mode beam */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none dark:hidden">
+          <div className="absolute inset-0 beam-light-sharp" />
+          <div className="absolute inset-0 blur-2xl beam-light-glow" />
+        </div>
+
+        {/* Dark mode beam */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden dark:block">
+          <div className="absolute inset-0 beam-dark-sharp" />
+          <div className="absolute inset-0 blur-3xl beam-dark-glow" />
+        </div>
+
         {/* Cursor-following glow */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div
