@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList } from 'lucide-react'
@@ -28,6 +28,18 @@ function LinkedinIcon({ size = 16 }: { size?: number }) {
 
 export default function Home() {
   const [projectView, setProjectView] = useState<'grid' | 'carousel'>('carousel')
+  const heroRef = useRef<HTMLElement>(null)
+  const glowRef = useRef<HTMLDivElement>(null)
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const rect = heroRef.current?.getBoundingClientRect()
+    const glow = glowRef.current
+    if (!rect || !glow) return
+    const x = ((e.clientX - rect.left) / rect.width) * 100
+    const y = ((e.clientY - rect.top) / rect.height) * 100
+    glow.style.left = `${x}%`
+    glow.style.top = `${y}%`
+  }, [])
 
   return (
     <>
@@ -36,8 +48,26 @@ export default function Home() {
       </Helmet>
 
       {/* Hero */}
-      <section className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center overflow-x-hidden">
+      <section
+        ref={heroRef}
+        onMouseMove={handleMouseMove}
+        className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center overflow-x-hidden"
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 animate-gradient dark:from-gray-950 dark:via-gray-900 dark:to-blue-950" />
+        {/* Cursor-following glow */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div
+            ref={glowRef}
+            className="absolute h-[120%] w-[120%] rounded-full opacity-40 blur-[100px] dark:opacity-15"
+            style={{
+              background: 'radial-gradient(circle, rgba(59,130,246,0.5) 0%, rgba(96,165,250,0.3) 30%, rgba(147,197,253,0.15) 55%, transparent 80%)',
+              left: '30%',
+              top: '70%',
+              transform: 'translate(-50%, -50%)',
+              transition: 'left 0.6s ease-out, top 0.6s ease-out',
+            }}
+          />
+        </div>
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
