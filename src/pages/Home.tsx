@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList } from 'lucide-react'
@@ -28,18 +28,6 @@ function LinkedinIcon({ size = 16 }: { size?: number }) {
 
 export default function Home() {
   const [projectView, setProjectView] = useState<'grid' | 'carousel'>('carousel')
-  const heroRef = useRef<HTMLElement>(null)
-  const glowRef = useRef<HTMLDivElement>(null)
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const rect = heroRef.current?.getBoundingClientRect()
-    const glow = glowRef.current
-    if (!rect || !glow) return
-    const x = ((e.clientX - rect.left) / rect.width) * 100
-    const y = ((e.clientY - rect.top) / rect.height) * 100
-    glow.style.left = `${x}%`
-    glow.style.top = `${y}%`
-  }, [])
 
   return (
     <>
@@ -48,40 +36,8 @@ export default function Home() {
       </Helmet>
 
       {/* Hero */}
-      <section
-        ref={heroRef}
-        onMouseMove={handleMouseMove}
-        className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center overflow-x-hidden"
-      >
-        {/* Base background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-50 dark:from-[#0a0e17] dark:via-[#0b1120] dark:to-[#0a0f1a]" />
-
-        {/* Light mode beam */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none dark:hidden">
-          <div className="absolute inset-0 beam-light-sharp" />
-          <div className="absolute inset-0 blur-2xl beam-light-glow" />
-        </div>
-
-        {/* Dark mode beam */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden dark:block">
-          <div className="absolute inset-0 beam-dark-sharp" />
-          <div className="absolute inset-0 blur-3xl beam-dark-glow" />
-        </div>
-
-        {/* Cursor-following glow */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            ref={glowRef}
-            className="absolute h-[120%] w-[120%] rounded-full opacity-40 blur-[100px] dark:opacity-15"
-            style={{
-              background: 'radial-gradient(circle, rgba(59,130,246,0.5) 0%, rgba(96,165,250,0.3) 30%, rgba(147,197,253,0.15) 55%, transparent 80%)',
-              left: '30%',
-              top: '70%',
-              transform: 'translate(-50%, -50%)',
-              transition: 'left 0.6s ease-out, top 0.6s ease-out',
-            }}
-          />
-        </div>
+      <section className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center overflow-x-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 animate-gradient dark:from-gray-950 dark:via-gray-900 dark:to-blue-950" />
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -177,11 +133,9 @@ export default function Home() {
       <SectionWrapper id="about" title="About" subtitle="A little about me">
         <div className="grid gap-10 md:grid-cols-[1fr_2fr] items-start">
           <div className="flex justify-center md:justify-start">
-            <img
-              src="/profile.png"
-              alt="Profile"
-              className="w-full max-w-[280px] aspect-square rounded-2xl object-cover shadow-xl border-4 border-white dark:border-gray-800 transition-transform duration-300 hover:scale-[1.02]"
-            />
+            <div className="h-40 w-40 rounded-2xl bg-gray-200 dark:bg-gray-800 flex items-center justify-center text-4xl">
+              👤
+            </div>
           </div>
           <div className="space-y-4 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
             <p>
