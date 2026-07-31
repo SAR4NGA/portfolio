@@ -9,6 +9,14 @@ export interface Certification {
 
 export const certifications: Certification[] = [
   {
+    title: 'Python Programming',
+    issuer: 'E-Certificate',
+    date: '',
+    description: '',
+    skills: ['Python'],
+    image: '/certs/Python_Programming_E-Certificate.png',
+  },
+  {
     title: 'Python for Beginners',
     issuer: 'E-Certificate',
     date: '',
