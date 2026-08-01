@@ -134,7 +134,7 @@ export default function SkillsGrid({ skills }: SkillsGridProps) {
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`rounded-full px-4 py-1.5 text-xs font-semibold tracking-wider uppercase transition-all ${
+            className={`rounded-full px-4 py-2.5 min-h-[44px] inline-flex items-center text-xs font-semibold tracking-wider uppercase transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
               activeCategory === category
                 ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20 dark:bg-blue-500'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
