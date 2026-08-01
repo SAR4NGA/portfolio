@@ -75,14 +75,14 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
         <>
           <button
             onClick={() => { prev(); resetTimer() }}
-            className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
+            className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 min-h-[44px] min-w-[44px] shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
             aria-label="Previous slide"
           >
             <ChevronLeft size={20} className="text-gray-600 dark:text-gray-400" />
           </button>
           <button
             onClick={() => { next(); resetTimer() }}
-            className="absolute -right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
+            className="absolute -right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 min-h-[44px] min-w-[44px] shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
             aria-label="Next slide"
           >
             <ChevronRight size={20} className="text-gray-600 dark:text-gray-400" />

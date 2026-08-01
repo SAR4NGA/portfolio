@@ -9,14 +9,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "DeepSeekV4Pro Token Optimizer",
-    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
-    tech: [
-      "TypeScript"
-    ],
-    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer"
-  },
-  {
     title: "Inflex Mobile",
     description: "",
     tech: [
@@ -32,6 +24,15 @@ export const projects: Project[] = [
     github: "https://github.com/SAR4NGA/inflex_mobile"
   },
   {
+    title: "Network Monitor",
+    description: "A lightweight, unobtrusive desktop network monitoring application for Windows. It provides a transparent, click-through widget to track your upload and download speeds in real-time, coupled with a background Windows service that continually logs data usage.",
+    tech: [
+      "Python",
+      "VBScript"
+    ],
+    github: "https://github.com/SAR4NGA/Network_Monitor"
+  },
+  {
     title: "LiteReader",
     description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
     tech: [
@@ -39,6 +40,26 @@ export const projects: Project[] = [
       "Kotlin"
     ],
     github: "https://github.com/SAR4NGA/liteReader"
+  },
+  {
+    title: "DeepSeekV4Pro Token Optimizer",
+    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
+    tech: [
+      "TypeScript"
+    ],
+    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer"
+  },
+  {
+    title: "ADBMS Project",
+    description: "",
+    tech: [
+      "JavaScript",
+      "TSQL",
+      "CSS",
+      "HTML",
+      "Dockerfile"
+    ],
+    github: "https://github.com/SAR4NGA/ADBMS_project"
   },
   {
     title: "LiteCordChat",
@@ -64,15 +85,6 @@ export const projects: Project[] = [
     github: "https://github.com/SAR4NGA/busapp"
   },
   {
-    title: "Network Monitor",
-    description: "A lightweight, unobtrusive desktop network monitoring application for Windows. It provides a transparent, click-through widget to track your upload and download speeds in real-time, coupled with a background Windows service that continually logs data usage.",
-    tech: [
-      "Python",
-      "VBScript"
-    ],
-    github: "https://github.com/SAR4NGA/Network_Monitor"
-  },
-  {
     title: "FinancialTracker",
     description: "A simple financial tracking web application built using ASP.NET Core Razor Pages. This project is build to help me to track my expences and incomes.It can track,categorize and summerize my main expenses and incomes. Then Thought it'll be helpful to others too.",
     tech: [
@@ -82,17 +94,5 @@ export const projects: Project[] = [
       "JavaScript"
     ],
     github: "https://github.com/SAR4NGA/financialTracker"
-  },
-  {
-    title: "ADBMS Project",
-    description: "",
-    tech: [
-      "JavaScript",
-      "TSQL",
-      "CSS",
-      "HTML",
-      "Dockerfile"
-    ],
-    github: "https://github.com/SAR4NGA/ADBMS_project"
   }
 ]
