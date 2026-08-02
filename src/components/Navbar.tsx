@@ -14,12 +14,16 @@ const navLinks = [
   { href: '/#contact', label: 'Contact', id: 'contact' },
 ]
 
+
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [, setPhases] = useState<Record<string, 'enter' | 'exit' | 'idle'>>({})
   const { theme, toggleTheme } = useTheme()
   const location = useLocation()
   const isHome = location.pathname === '/'
+  const rafRef = useRef(0)
 
   const barsRef = useRef(
     sectionIds.reduce((acc, id) => {
@@ -32,6 +36,8 @@ export default function Navbar() {
 
   for (const id of sectionIds) {
     const sweep = barsRef.current[id].sweep
+    // sweep 0–100:  left-anchored growth  → left: 0%, width: s%
+    // sweep 100–200: right-anchored shrink → left: (s-100)%, width: (200-s)%
     const left = useTransform(sweep, (s: number) => (s <= 100 ? '0%' : `${s - 100}%`))
     const width = useTransform(sweep, (s: number) => {
       const w = s <= 100 ? s : 200 - s
@@ -41,19 +47,19 @@ export default function Navbar() {
   }
 
   useEffect(() => {
-    const els = sectionIds.map(id => document.getElementById(id))
-
     const handleScroll = () => {
       const vh = window.innerHeight
       const viewportCenter = vh / 2
 
       let bestSection = ''
       let bestProgress = 0
+      const nextPhases: Record<string, 'enter' | 'exit' | 'idle'> = {}
 
-      for (let i = 0; i < sectionIds.length; i++) {
-        const el = els[i]
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
         if (!el) {
-          barsRef.current[sectionIds[i]].sweep.set(0)
+          nextPhases[id] = 'idle'
+          barsRef.current[id].sweep.set(0)
           continue
         }
 
@@ -61,17 +67,22 @@ export default function Navbar() {
         const sectionCenter = rect.top + rect.height / 2
         const distance = sectionCenter - viewportCenter
         const half = rect.height / 2 + vh * 0.2
-        const progress = Math.max(0, Math.min(1, 1 - Math.abs(distance) / half))
+        const absDist = Math.abs(distance)
+        const progress = Math.max(0, Math.min(1, 1 - absDist / half))
+        const phase: 'enter' | 'exit' | 'idle' =
+          progress < 0.01 ? 'idle' : distance > 0 ? 'enter' : 'exit'
+
+        nextPhases[id] = phase
 
         const targetSweep = distance < 0
           ? 100 + (1 - progress) * 100
           : progress * 100
 
-        barsRef.current[sectionIds[i]].sweep.set(targetSweep)
+        barsRef.current[id].sweep.set(targetSweep)
 
         if (progress > bestProgress) {
           bestProgress = progress
-          bestSection = sectionIds[i]
+          bestSection = id
         }
       }
 
@@ -80,16 +91,18 @@ export default function Navbar() {
       } else if (window.scrollY === 0) {
         setActiveSection('')
       }
+
+      setPhases(prev => {
+        for (const id of sectionIds) {
+          if (prev[id] !== nextPhases[id]) return nextPhases
+        }
+        return prev
+      })
     }
 
-    let lastRun = 0
-    const THROTTLE_MS = 50
-
     const onScroll = () => {
-      const now = performance.now()
-      if (now - lastRun < THROTTLE_MS) return
-      lastRun = now
-      handleScroll()
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = requestAnimationFrame(handleScroll)
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -97,6 +110,7 @@ export default function Navbar() {
 
     return () => {
       window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(rafRef.current)
     }
   }, [])
 

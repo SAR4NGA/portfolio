@@ -16,13 +16,14 @@ import { certifications } from '../data/certifications'
 
 /*
  * Pre-computed SVG mask for the light-mode hero particle animation.
- * Creates three opacity zones:
- *   • LEFT edge + BOTTOM-LEFT + BOTTOM edge: HIGH (white gradient fill → ~0.6 effective)
- *   • BOTTOM-RIGHT: MEDIUM (gray gradient fill → ~0.24 effective)
- *   • CENTER (under name) + TOP-RIGHT: NEARLY INVISIBLE (rgb(5,5,5) base → ~0.01 effective)
- * Uses a horizontal linearGradient (white→gray) on the path to blend left-high → right-medium.
+ * 4×4 grid opacity map (matches user's annotated grid):
+ *   Row 1: medium | low      | more low     | not visible
+ *   Row 2: high   | very low | not visible  | not visible
+ *   Row 3: higher | medium   | low          | medium
+ *   Row 4: high   | high     | medium       | high
+ * feGaussianBlur (stdDeviation=40) blends cell boundaries smoothly.
  */
-const HERO_MASK_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'><defs><filter id='f'><feGaussianBlur stdDeviation='40'/></filter><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='white'/><stop offset='0.55' stop-color='white'/><stop offset='1' stop-color='rgb(100,100,100)'/></linearGradient></defs><rect width='1000' height='1000' fill='rgb(5,5,5)'/><path d='M0,0 L0,1000 L1000,1000 L1000,850 C850,780 700,720 550,700 C400,685 300,700 200,750 C100,800 50,850 0,850 Z' fill='url(#g)' filter='url(#f)'/></svg>`
+const HERO_MASK_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'><defs><filter id='f' x='-5%' y='-5%' width='110%' height='110%'><feGaussianBlur stdDeviation='40'/></filter></defs><g filter='url(#f)'><rect x='0' y='0' width='250' height='250' fill='rgb(100,100,100)'/><rect x='250' y='0' width='250' height='250' fill='rgb(45,45,45)'/><rect x='500' y='0' width='250' height='250' fill='rgb(25,25,25)'/><rect x='750' y='0' width='250' height='250' fill='rgb(0,0,0)'/><rect x='0' y='250' width='250' height='250' fill='rgb(180,180,180)'/><rect x='250' y='250' width='250' height='250' fill='rgb(15,15,15)'/><rect x='500' y='250' width='250' height='250' fill='rgb(0,0,0)'/><rect x='750' y='250' width='250' height='250' fill='rgb(0,0,0)'/><rect x='0' y='500' width='250' height='250' fill='rgb(230,230,230)'/><rect x='250' y='500' width='250' height='250' fill='rgb(100,100,100)'/><rect x='500' y='500' width='250' height='250' fill='rgb(45,45,45)'/><rect x='750' y='500' width='250' height='250' fill='rgb(100,100,100)'/><rect x='0' y='750' width='250' height='250' fill='rgb(180,180,180)'/><rect x='250' y='750' width='250' height='250' fill='rgb(180,180,180)'/><rect x='500' y='750' width='250' height='250' fill='rgb(100,100,100)'/><rect x='750' y='750' width='250' height='250' fill='rgb(180,180,180)'/></g></svg>`
 const heroMaskImage = `url("data:image/svg+xml,${encodeURIComponent(HERO_MASK_SVG)}")`
 
 export default function Home() {
@@ -97,13 +98,23 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+            }}
             className="mb-1 font-mono text-blue-600 dark:text-blue-400"
           >
-            <span className="text-4xl">Hello,</span>
-            <span className="text-3xl"> I&apos;m</span>
+            <span className="text-4xl">
+              {"Hello,".split("").map((char, i) => (
+                <motion.span key={`h-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
+              ))}
+            </span>
+            <span className="text-3xl">
+              {" I'm".split("").map((char, i) => (
+                <motion.span key={`i-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
+              ))}
+            </span>
           </motion.div>
           <h1
             className="mb-2 font-extrabold tracking-tight text-gray-900 dark:text-white"
@@ -121,7 +132,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 1.5 }}
-              className="inline-block ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-8xl font-black text-gray-900 dark:text-white underline decoration-2"
+              className="inline-block ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-8xl font-black text-gray-900 dark:text-white "
             >
               SARANGA
             </motion.span>
@@ -135,12 +146,16 @@ export default function Home() {
             Software Engineering Undergraduate
           </motion.p>
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 2.5 }}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.02, delayChildren: 2.5 } },
+            }}
             className="mb-8 max-w-xl mx-auto text-lg text-gray-500 dark:text-gray-500"
           >
-            From coursework to full stack systems, I like turning messy requirements into software that actually works.
+            {"From coursework to full stack systems, I like turning messy requirements into software that actually works.".split("").map((char, i) => (
+              <motion.span key={`desc-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
+            ))}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
