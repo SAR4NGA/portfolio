@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useAnimationPause } from '../../hooks/useAnimationPause'
 import type { Skill } from '../../data/skills'
 import SkillIcon from '../SkillIcon'
 
@@ -125,9 +126,10 @@ export default function SkillsGrid({ skills }: SkillsGridProps) {
       : skills.filter(skill => skill.category === activeCategory)
 
   const rows = buildRows(filteredSkills)
+  const animRef = useAnimationPause<HTMLDivElement>()
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div ref={animRef} className="flex flex-col items-center gap-8">
       {/* Category Filter Pills */}
       <div className="flex flex-wrap items-center justify-center gap-2">
         {categories.map(category => (

@@ -183,6 +183,14 @@ body,
   }
 }
 
+/* Pause animations when element is off-screen (toggled via IntersectionObserver) */
+.anim-paused,
+.anim-paused *,
+.anim-paused *::before,
+.anim-paused *::after {
+  animation-play-state: paused !important;
+}
+
 :root {
   --beam-primary-light: rgba(59,130,246,0.12);
   --beam-secondary-light: rgba(56,189,248,0.18);
