@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 import HeroNetworkAnimation from '../components/HeroLightAnimations'
-import { GitHubCalendar } from 'react-github-calendar'
+import LazyGitHubCalendar from '../components/LazyGitHubCalendar'
 import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList } from 'lucide-react'
@@ -409,7 +409,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
             <div className="w-full max-w-3xl overflow-hidden rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900/50">
               <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Contribution Graph</p>
               <div className="block overflow-hidden dark:hidden">
-                <GitHubCalendar
+                <LazyGitHubCalendar
                   username="SAR4NGA"
                   colorScheme="light"
                   blockSize={13}
@@ -422,7 +422,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
                 />
               </div>
               <div className="hidden overflow-hidden dark:block">
-                <GitHubCalendar
+                <LazyGitHubCalendar
                   username="SAR4NGA"
                   colorScheme="dark"
                   blockSize={11}

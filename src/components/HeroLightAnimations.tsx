@@ -4,7 +4,7 @@ interface Props {
   color?: string
 }
 
-export default function HeroNetworkAnimation({ color = '100, 116, 139' }: Props) {
+export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const pausedRef = useRef(false)
 
