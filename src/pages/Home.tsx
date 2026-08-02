@@ -132,7 +132,8 @@ export default function Home() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 1.5 }}
-              className="inline-block ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-8xl font-black text-gray-900 dark:text-white "
+              className="inline-block ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-8xl font-black bg-gradient-to-r from-gray-900 via-blue-500 to-gray-900 dark:from-white dark:via-blue-400 dark:to-white bg-[length:200%_100%] bg-clip-text text-transparent underline decoration-gray-900 dark:decoration-white decoration-2 animate-text-shine"
+              style={{ animationDelay: '2.2s' }}
             >
               SARANGA
             </motion.span>

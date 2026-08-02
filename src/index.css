@@ -103,6 +103,15 @@ body,
   animation: button-shine 5s ease-out infinite;
 }
 
+@keyframes text-shine {
+  0% { background-position: -200% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.animate-text-shine {
+  animation: text-shine 3.5s ease-in-out infinite;
+}
+
 @keyframes border-glow-cycle {
   0% { opacity: 0; }
   10% { opacity: 1; }
