@@ -1,22 +1,12 @@
 import { useEffect, useRef } from 'react'
 
-/**
- * Network Constellation Animation
- * Concentrates particles along the left and bottom edges of the container,
- * with lines connecting nearby particles.
- */
 interface Props {
-  color?: string; // RGB values like '100, 116, 139'
+  color?: string
 }
 
 export default function HeroNetworkAnimation({ color = '100, 116, 139' }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const colorRef = useRef(color)
-
-  // Update the ref whenever the color prop changes
-  useEffect(() => {
-    colorRef.current = color
-  }, [color])
+  const pausedRef = useRef(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -35,9 +25,14 @@ export default function HeroNetworkAnimation({ color = '100, 116, 139' }: Props)
     resize()
     window.addEventListener('resize', resize)
 
-    /* ── Particle setup ── */
-    // We want particles to cluster near the left edge (x near 0) and bottom edge (y near height)
     const TOTAL = 180
+
+    const colors = [
+      '66, 133, 244',
+      '234, 67, 53',
+      '251, 188, 5',
+      '52, 168, 83',
+    ]
 
     interface Particle {
       x: number
@@ -46,6 +41,7 @@ export default function HeroNetworkAnimation({ color = '100, 116, 139' }: Props)
       vy: number
       size: number
       baseAlpha: number
+      color: string
     }
 
     const particles: Particle[] = []
@@ -53,28 +49,23 @@ export default function HeroNetworkAnimation({ color = '100, 116, 139' }: Props)
     const initParticle = (): Particle => {
       const w = canvas.offsetWidth
       const h = canvas.offsetHeight
-
-      // Determine if this particle belongs to the "left wall" or "bottom wall"
       const isLeft = Math.random() > 0.5
-
       let x, y
       if (isLeft) {
-        // Left wall: x is heavily weighted towards 0
-        x = Math.pow(Math.random(), 3) * (w * 0.4) // max 40% width, mostly near 0
+        x = Math.pow(Math.random(), 3) * (w * 0.4)
         y = Math.random() * h
       } else {
-        // Bottom wall: y is heavily weighted towards h
         x = Math.random() * w
-        y = h - Math.pow(Math.random(), 3) * (h * 0.5) // max 50% height from bottom
+        y = h - Math.pow(Math.random(), 3) * (h * 0.5)
       }
-
       return {
         x,
         y,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        size: 1 + Math.random() * 2,
-        baseAlpha: 0.1 + Math.random() * 0.5
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        size: 1.5 + Math.random() * 2.5,
+        baseAlpha: 0.3 + Math.random() * 0.7,
+        color: colors[Math.floor(Math.random() * colors.length)],
       }
     }
 
@@ -82,9 +73,37 @@ export default function HeroNetworkAnimation({ color = '100, 116, 139' }: Props)
       particles.push(initParticle())
     }
 
-    const connectionDistance = 120 * dpr
+    const CONN_DIST = 140
+    const CONN_DIST_SQ = CONN_DIST * CONN_DIST
+    const MAX_REPEL_DIST = 150
+    const MAX_REPEL_DIST_SQ = MAX_REPEL_DIST * MAX_REPEL_DIST
 
-    /* ── Draw loop ── */
+    let mouse = { x: -1000, y: -1000 }
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect()
+      mouse.x = e.clientX - rect.left
+      mouse.y = e.clientY - rect.top
+    }
+    const onMouseLeave = () => {
+      mouse.x = -1000
+      mouse.y = -1000
+    }
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseout', onMouseLeave)
+
+    const onVisibilityChange = () => {
+      pausedRef.current = document.hidden
+    }
+    document.addEventListener('visibilitychange', onVisibilityChange)
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        pausedRef.current = !entry.isIntersecting || document.hidden
+      },
+      { threshold: 0 },
+    )
+    observer.observe(canvas)
+
     const draw = () => {
       const w = canvas.offsetWidth
       const h = canvas.offsetHeight
@@ -92,69 +111,70 @@ export default function HeroNetworkAnimation({ color = '100, 116, 139' }: Props)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.clearRect(0, 0, w, h)
 
-      // Update positions
       for (let i = 0; i < TOTAL; i++) {
         const p = particles[i]
+
+        const dxM = p.x - mouse.x
+        const dyM = p.y - mouse.y
+        const distToMouseSq = dxM * dxM + dyM * dyM
+
+        if (distToMouseSq < MAX_REPEL_DIST_SQ && distToMouseSq > 0) {
+          const distToMouse = Math.sqrt(distToMouseSq)
+          const force = (MAX_REPEL_DIST - distToMouse) / MAX_REPEL_DIST
+          p.x += (dxM / distToMouse) * force * 2.5
+          p.y += (dyM / distToMouse) * force * 2.5
+        }
+
         p.x += p.vx
         p.y += p.vy
 
-        // Bounce or wrap
         if (p.x < -50 || p.x > w + 50 || p.y < -50 || p.y > h + 50) {
           Object.assign(p, initParticle())
         }
       }
 
-      // Draw connections
-      ctx.lineWidth = 0.6
+      ctx.lineWidth = 1.0
       for (let i = 0; i < TOTAL; i++) {
         const p1 = particles[i]
         for (let j = i + 1; j < TOTAL; j++) {
           const p2 = particles[j]
           const dx = p1.x - p2.x
           const dy = p1.y - p2.y
-          const dist = Math.sqrt(dx * dx + dy * dy)
+          const distSq = dx * dx + dy * dy
 
-          if (dist < connectionDistance / dpr) {
-            const alpha = (1 - dist / (connectionDistance / dpr)) * 0.25
+          if (distSq < CONN_DIST_SQ) {
+            const dist = Math.sqrt(distSq)
+            const alpha = (1 - dist / CONN_DIST) * 0.5
             ctx.beginPath()
             ctx.moveTo(p1.x, p1.y)
             ctx.lineTo(p2.x, p2.y)
-            if (colorRef.current === 'rainbow') {
-              const time = window.performance.now() * 0.05
-              const avgX = (p1.x + p2.x) / 2
-              const avgY = (p1.y + p2.y) / 2
-              const hue = Math.floor(Math.abs(avgX * 0.2 + avgY * 0.2 + time)) % 360
-              ctx.strokeStyle = `hsl(${hue}, 80%, 60%)`
-              ctx.globalAlpha = alpha
-            } else {
-              ctx.strokeStyle = `rgb(${colorRef.current})` 
-              ctx.globalAlpha = alpha
-            }
+            ctx.strokeStyle = `rgba(${p1.color}, ${alpha})`
             ctx.stroke()
-            ctx.globalAlpha = 1.0
           }
+        }
+
+        const distToMouse = Math.hypot(p1.x - mouse.x, p1.y - mouse.y)
+        if (distToMouse < CONN_DIST) {
+          const alpha = (1 - distToMouse / CONN_DIST) * 0.6
+          ctx.beginPath()
+          ctx.moveTo(p1.x, p1.y)
+          ctx.lineTo(mouse.x, mouse.y)
+          ctx.strokeStyle = `rgba(${p1.color}, ${alpha})`
+          ctx.stroke()
         }
       }
 
-      // Draw particles
-      const time = window.performance.now() * 0.05
       for (let i = 0; i < TOTAL; i++) {
         const p = particles[i]
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        if (colorRef.current === 'rainbow') {
-          const hue = Math.floor(Math.abs(p.x * 0.2 + p.y * 0.2 + time)) % 360
-          ctx.fillStyle = `hsl(${hue}, 80%, 60%)`
-          ctx.globalAlpha = p.baseAlpha
-        } else {
-          ctx.fillStyle = `rgb(${colorRef.current})`
-          ctx.globalAlpha = p.baseAlpha
-        }
+        ctx.fillStyle = `rgba(${p.color}, ${p.baseAlpha})`
         ctx.fill()
-        ctx.globalAlpha = 1.0
       }
 
-      animId = requestAnimationFrame(draw)
+      if (!pausedRef.current) {
+        animId = requestAnimationFrame(draw)
+      }
     }
 
     animId = requestAnimationFrame(draw)
@@ -162,6 +182,10 @@ export default function HeroNetworkAnimation({ color = '100, 116, 139' }: Props)
     return () => {
       cancelAnimationFrame(animId)
       window.removeEventListener('resize', resize)
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseout', onMouseLeave)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      observer.disconnect()
     }
   }, [])
 
