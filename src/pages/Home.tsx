@@ -9,13 +9,26 @@ import SkillsGrid from '../components/skills/SkillsGrid'
 import ProjectCard from '../components/ProjectCard'
 import ProjectCarousel from '../components/ProjectCarousel'
 import { GithubIcon, LinkedinIcon } from '../components/Icons'
+import { useTheme } from '../hooks/useTheme'
 import { skills } from '../data/skills'
 import { projects } from '../data/projects'
 import { certifications } from '../data/certifications'
 
+/*
+ * Pre-computed SVG mask for the light-mode hero particle animation.
+ * Creates two opacity zones separated by a curved boundary:
+ *   • HIGH zone (below/inside the curve): white fill → full mask → ~0.6 effective opacity
+ *   • LOW zone (outside the curve): rgb(30,30,30) fill → ~12% mask → ~0.07 effective opacity
+ * The feGaussianBlur (stdDeviation=35 in a 1000-unit viewBox) feathers the edge naturally.
+ * preserveAspectRatio="none" ensures the curve scales with viewport dimensions.
+ */
+const HERO_MASK_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'><defs><filter id='f'><feGaussianBlur stdDeviation='35'/></filter></defs><rect width='1000' height='1000' fill='rgb(30,30,30)'/><path d='M0,0 L0,850 C120,550 250,350 380,280 C480,230 550,200 620,250 C720,320 780,450 880,650 L1000,950 L1000,1000 L0,1000 Z' fill='white' filter='url(#f)'/></svg>`
+const heroMaskImage = `url("data:image/svg+xml,${encodeURIComponent(HERO_MASK_SVG)}")`
+
 export default function Home() {
   const [projectView, setProjectView] = useState<'grid' | 'carousel'>('carousel')
   const [projectsTab, setProjectsTab] = useState<'projects' | 'github'>('projects')
+  const { theme } = useTheme()
   const heroRef = useRef<HTMLElement>(null)
   const glowRef = useRef<HTMLDivElement>(null)
 
@@ -44,9 +57,20 @@ export default function Home() {
         {/* Base background */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-50 dark:from-[#0a0f1c] dark:via-[#0c1222] dark:to-[#0a0f1c]" />
 
-        {/* Light mode animation (hidden in dark mode) */}
+        {/* Light mode animation (hidden in dark mode) — masked with curved opacity zones */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none dark:hidden">
-          <HeroNetworkAnimation color="59, 130, 246" />
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              maskImage: heroMaskImage,
+              WebkitMaskImage: heroMaskImage,
+              maskSize: '100% 100%',
+              WebkitMaskSize: '100% 100%',
+            }}
+          >
+            <HeroNetworkAnimation color="59, 130, 246" />
+          </div>
         </div>
 
         {/* Dark mode beam */}
@@ -361,76 +385,73 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
             transition={{ duration: 0.4 }}
             className="flex flex-col items-center gap-6"
           >
-            <div className="grid w-full max-w-3xl gap-6 sm:grid-cols-2">
+            {theme === 'dark' ? (
+              <div className="grid w-full max-w-3xl gap-6 sm:grid-cols-2">
+                <img
+                  src="https://github-stats-extended.vercel.app/api?username=SAR4NGA&show_icons=true&theme=dark&hide_border=true&bg_color=00000000&title_color=ffffff&text_color=9ca3af&icon_color=60a5fa"
+                  alt="GitHub Stats"
+                  loading="lazy"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  className="w-full rounded-xl border border-gray-800 bg-gray-900/50 p-2"
+                />
+                <img
+                  src="https://github-stats-extended.vercel.app/api/top-langs/?username=SAR4NGA&layout=compact&hide_border=true&bg_color=00000000&title_color=ffffff&text_color=9ca3af"
+                  alt="Top Languages"
+                  loading="lazy"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  className="w-full rounded-xl border border-gray-800 bg-gray-900/50 p-2"
+                />
+              </div>
+            ) : (
+              <div className="grid w-full max-w-3xl gap-6 sm:grid-cols-2">
+                <img
+                  src="https://github-stats-extended.vercel.app/api?username=SAR4NGA&show_icons=true&theme=default&hide_border=true&bg_color=00000000&title_color=1f2937&text_color=4b5563&icon_color=3b82f6"
+                  alt="GitHub Stats"
+                  loading="lazy"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  className="w-full rounded-xl border border-gray-200 bg-white p-2"
+                />
+                <img
+                  src="https://github-stats-extended.vercel.app/api/top-langs/?username=SAR4NGA&layout=compact&hide_border=true&bg_color=00000000&title_color=1f2937&text_color=4b5563"
+                  alt="Top Languages"
+                  loading="lazy"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  className="w-full rounded-xl border border-gray-200 bg-white p-2"
+                />
+              </div>
+            )}
+            {theme === 'dark' ? (
               <img
-                src="https://github-stats-extended.vercel.app/api?username=SAR4NGA&show_icons=true&theme=default&hide_border=true&bg_color=00000000&title_color=1f2937&text_color=4b5563&icon_color=3b82f6"
-                alt="GitHub Stats"
+                src="https://streak-stats.demolab.com/?user=SAR4NGA&hide_border=true&background=00000000&ring=60a5fa&fire=60a5fa&currStreakLabel=ffffff&sideLabels=9ca3af&currStreakNum=ffffff&sideNums=9ca3af&dates=6b7280"
+                alt="GitHub Streak"
                 loading="lazy"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                className="w-full rounded-xl border border-gray-200 bg-white p-2 dark:hidden dark:border-gray-800"
+                className="w-full max-w-3xl rounded-xl border border-gray-800 bg-gray-900/50 p-2"
               />
+            ) : (
               <img
-                src="https://github-stats-extended.vercel.app/api?username=SAR4NGA&show_icons=true&theme=dark&hide_border=true&bg_color=00000000&title_color=ffffff&text_color=9ca3af&icon_color=60a5fa"
-                alt="GitHub Stats"
+                src="https://streak-stats.demolab.com/?user=SAR4NGA&hide_border=true&background=00000000&ring=3b82f6&fire=3b82f6&currStreakLabel=1f2937&sideLabels=4b5563&currStreakNum=1f2937&sideNums=4b5563&dates=9ca3af"
+                alt="GitHub Streak"
                 loading="lazy"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                className="hidden w-full rounded-xl border border-gray-800 bg-gray-900/50 p-2 dark:block"
+                className="w-full max-w-3xl rounded-xl border border-gray-200 bg-white p-2"
               />
-              <img
-                src="https://github-stats-extended.vercel.app/api/top-langs/?username=SAR4NGA&layout=compact&hide_border=true&bg_color=00000000&title_color=1f2937&text_color=4b5563"
-                alt="Top Languages"
-                loading="lazy"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                className="w-full rounded-xl border border-gray-200 bg-white p-2 dark:hidden dark:border-gray-800"
-              />
-              <img
-                src="https://github-stats-extended.vercel.app/api/top-langs/?username=SAR4NGA&layout=compact&hide_border=true&bg_color=00000000&title_color=ffffff&text_color=9ca3af"
-                alt="Top Languages"
-                loading="lazy"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                className="hidden w-full rounded-xl border border-gray-800 bg-gray-900/50 p-2 dark:block"
-              />
-            </div>
-            <img
-              src="https://streak-stats.demolab.com/?user=SAR4NGA&hide_border=true&background=00000000&ring=3b82f6&fire=3b82f6&currStreakLabel=1f2937&sideLabels=4b5563&currStreakNum=1f2937&sideNums=4b5563&dates=9ca3af"
-              alt="GitHub Streak"
-              loading="lazy"
-              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-              className="w-full max-w-3xl rounded-xl border border-gray-200 bg-white p-2 dark:hidden"
-            />
-            <img
-              src="https://streak-stats.demolab.com/?user=SAR4NGA&hide_border=true&background=00000000&ring=60a5fa&fire=60a5fa&currStreakLabel=ffffff&sideLabels=9ca3af&currStreakNum=ffffff&sideNums=9ca3af&dates=6b7280"
-              alt="GitHub Streak"
-              loading="lazy"
-              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-              className="hidden w-full max-w-3xl rounded-xl border border-gray-800 bg-gray-900/50 p-2 dark:block"
-            />
+            )}
             {/* Contribution calendar */}
             <div className="w-full max-w-3xl overflow-hidden rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900/50">
               <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">Contribution Graph</p>
-              <div className="block overflow-hidden dark:hidden">
+              <div className="overflow-hidden">
                 <LazyGitHubCalendar
                   username="SAR4NGA"
-                  colorScheme="light"
-                  blockSize={13}
+                  colorScheme={theme === 'dark' ? 'dark' : 'light'}
+                  blockSize={theme === 'dark' ? 11 : 13}
                   blockRadius={3}
-                  blockMargin={4}
+                  blockMargin={theme === 'dark' ? 3 : 4}
                   fontSize={12}
-                  theme={{
-                    light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-                  }}
-                />
-              </div>
-              <div className="hidden overflow-hidden dark:block">
-                <LazyGitHubCalendar
-                  username="SAR4NGA"
-                  colorScheme="dark"
-                  blockSize={11}
-                  blockRadius={3}
-                  blockMargin={3}
-                  fontSize={12}
-                  theme={{
+                  theme={theme === 'dark' ? {
                     dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+                  } : {
+                    light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
                   }}
                 />
               </div>
