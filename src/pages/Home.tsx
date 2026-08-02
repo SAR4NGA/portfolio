@@ -16,13 +16,13 @@ import { certifications } from '../data/certifications'
 
 /*
  * Pre-computed SVG mask for the light-mode hero particle animation.
- * Creates two opacity zones separated by a curved boundary:
- *   • HIGH zone (below/inside the curve): white fill → full mask → ~0.6 effective opacity
- *   • LOW zone (outside the curve): rgb(30,30,30) fill → ~12% mask → ~0.07 effective opacity
- * The feGaussianBlur (stdDeviation=35 in a 1000-unit viewBox) feathers the edge naturally.
- * preserveAspectRatio="none" ensures the curve scales with viewport dimensions.
+ * Creates three opacity zones:
+ *   • LEFT edge + BOTTOM-LEFT + BOTTOM edge: HIGH (white gradient fill → ~0.6 effective)
+ *   • BOTTOM-RIGHT: MEDIUM (gray gradient fill → ~0.24 effective)
+ *   • CENTER (under name) + TOP-RIGHT: NEARLY INVISIBLE (rgb(5,5,5) base → ~0.01 effective)
+ * Uses a horizontal linearGradient (white→gray) on the path to blend left-high → right-medium.
  */
-const HERO_MASK_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'><defs><filter id='f'><feGaussianBlur stdDeviation='35'/></filter></defs><rect width='1000' height='1000' fill='rgb(30,30,30)'/><path d='M0,0 L0,850 C120,550 250,350 380,280 C480,230 550,200 620,250 C720,320 780,450 880,650 L1000,950 L1000,1000 L0,1000 Z' fill='white' filter='url(#f)'/></svg>`
+const HERO_MASK_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'><defs><filter id='f'><feGaussianBlur stdDeviation='40'/></filter><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='white'/><stop offset='0.55' stop-color='white'/><stop offset='1' stop-color='rgb(100,100,100)'/></linearGradient></defs><rect width='1000' height='1000' fill='rgb(5,5,5)'/><path d='M0,0 L0,1000 L1000,1000 L1000,850 C850,780 700,720 550,700 C400,685 300,700 200,750 C100,800 50,850 0,850 Z' fill='url(#g)' filter='url(#f)'/></svg>`
 const heroMaskImage = `url("data:image/svg+xml,${encodeURIComponent(HERO_MASK_SVG)}")`
 
 export default function Home() {
@@ -97,23 +97,13 @@ export default function Home() {
 
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: { transition: { staggerChildren: 0.1 } },
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
             className="mb-1 font-mono text-blue-600 dark:text-blue-400"
           >
-            <span className="text-4xl">
-              {"Hello,".split("").map((char, i) => (
-                <motion.span key={`h-${i}`} variants={{ hidden: { opacity: 0, display: 'none' }, visible: { opacity: 1, display: 'inline' } }}>{char}</motion.span>
-              ))}
-            </span>
-            <span className="text-3xl">
-              {" I'm".split("").map((char, i) => (
-                <motion.span key={`i-${i}`} variants={{ hidden: { opacity: 0, display: 'none' }, visible: { opacity: 1, display: 'inline' } }}>{char}</motion.span>
-              ))}
-            </span>
+            <span className="text-4xl">Hello,</span>
+            <span className="text-3xl"> I&apos;m</span>
           </motion.div>
           <h1
             className="mb-2 font-extrabold tracking-tight text-gray-900 dark:text-white"
@@ -145,16 +135,12 @@ export default function Home() {
             Software Engineering Undergraduate
           </motion.p>
           <motion.p
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: { transition: { staggerChildren: 0.02, delayChildren: 2.5 } },
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 2.5 }}
             className="mb-8 max-w-xl mx-auto text-lg text-gray-500 dark:text-gray-500"
           >
-            {"From coursework to full stack systems, I like turning messy requirements into software that actually works.".split("").map((char, i) => (
-              <motion.span key={`desc-${i}`} variants={{ hidden: { opacity: 0, display: 'none' }, visible: { opacity: 1, display: 'inline' } }}>{char}</motion.span>
-            ))}
+            From coursework to full stack systems, I like turning messy requirements into software that actually works.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
