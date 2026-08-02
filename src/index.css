@@ -105,11 +105,12 @@ body,
 
 @keyframes text-shine {
   0% { background-position: -200% 50%; }
+  12% { background-position: 200% 50%; }
   100% { background-position: 200% 50%; }
 }
 
 .animate-text-shine {
-  animation: text-shine 3.5s ease-in-out infinite;
+  animation: text-shine 10s ease-in-out infinite;
 }
 
 @keyframes border-glow-cycle {
