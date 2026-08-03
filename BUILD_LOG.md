@@ -22,10 +22,9 @@
 
 ## To customize
 1. **Personal info** — edit `src/data/skills.ts`, `projects.ts`, `experience.ts`
-2. **Name/links** — replace `Your Name`, `yourusername`, `hello@yourdomain.dev` across all files
-3. **Blog** — add `.md` files to `src/content/blog/` with frontmatter
-4. **Favicon** — replace `public/favicon.svg`
-5. **Profile photo** — add image to `public/` and update `Home.tsx`
+2. **Blog** — add `.md` files to `src/content/blog/` with frontmatter
+3. **Favicon** — replace `public/favicon.svg`
+4. **Profile photo** — add image to `public/` and update `Home.tsx`
 
 ## Commands
 ```bash
