@@ -136,7 +136,7 @@ export default function Navbar() {
                 onClick={() => isHome ? scrollTo(link.href) : (window.location.href = `/${link.href}`)}
                 className={`relative px-4 py-1.5 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:rounded ${
                   isActive
-                    ? 'text-blue-600 dark:text-blue-400'
+                    ? 'text-gray-900 dark:text-white'
                     : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
                 }`}
               >
