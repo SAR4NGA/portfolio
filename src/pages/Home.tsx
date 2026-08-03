@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Saranga's</title>
+        <title>Pasindu Saranga</title>
       </Helmet>
 
       {/* Hero */}
