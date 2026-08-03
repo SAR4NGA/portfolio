@@ -52,7 +52,7 @@ function InfiniteMarqueeRow({
               <div className="flex h-13 w-13 sm:h-15 sm:w-15 items-center justify-center transition-transform duration-300 group-hover/item:scale-110">
                 <SkillIcon name={skill.icon} size={50} />
               </div>
-              <span className="mt-2.5 text-center text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-gray-500 dark:text-gray-400 group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400 transition-colors">
+              <span className="mt-2.5 text-center text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-gray-500 dark:text-gray-400 group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors">
                 {skill.name}
               </span>
             </motion.div>
@@ -131,15 +131,15 @@ export default function SkillsGrid({ skills }: SkillsGridProps) {
   return (
     <div ref={animRef} className="flex flex-col items-center gap-8">
       {/* Category Filter Pills */}
-      <div className="flex flex-wrap items-center justify-center gap-2">
+      <div className="inline-flex rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
         {categories.map(category => (
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`rounded-full px-4 py-2.5 min-h-[44px] inline-flex items-center text-xs font-semibold tracking-wider uppercase transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+            className={`rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 ${
               activeCategory === category
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20 dark:bg-blue-500'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'
+                ? 'bg-gray-900 text-white shadow-sm dark:bg-white dark:text-gray-900'
+                : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
             }`}
           >
             {category}
