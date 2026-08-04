@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useRef } from 'react'
 import HeroNetworkAnimation from '../components/HeroLightAnimations'
 import LazyGitHubCalendar from '../components/LazyGitHubCalendar'
 import { motion } from 'framer-motion'
@@ -31,17 +31,6 @@ export default function Home() {
   const [projectsTab, setProjectsTab] = useState<'projects' | 'github'>('projects')
   const { theme } = useTheme()
   const heroRef = useRef<HTMLElement>(null)
-  const glowRef = useRef<HTMLDivElement>(null)
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    const rect = heroRef.current?.getBoundingClientRect()
-    const glow = glowRef.current
-    if (!rect || !glow) return
-    const x = ((e.clientX - rect.left) / rect.width) * 100
-    const y = ((e.clientY - rect.top) / rect.height) * 100
-    glow.style.left = `${x}%`
-    glow.style.top = `${y}%`
-  }, [])
 
   return (
     <>
@@ -52,7 +41,6 @@ export default function Home() {
       {/* Hero */}
       <section
         ref={heroRef}
-        onMouseMove={handleMouseMove}
         className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center overflow-x-hidden"
       >
         {/* Base background */}
@@ -76,25 +64,9 @@ export default function Home() {
 
         {/* Dark mode beam */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none hidden dark:block">
-          <div className="absolute inset-0 beam-dark-sharp" />
-          <div className="absolute inset-0 blur-3xl beam-dark-glow" />
+          <div className="absolute top-0 left-0 w-[200%] h-[200%] beam-dark-sharp" />
+          <div className="absolute top-0 left-0 w-[200%] h-[200%] blur-3xl beam-dark-glow" />
         </div>
-
-        {/* Cursor-following glow (dark mode only) */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden dark:block">
-          <div
-            ref={glowRef}
-            className="absolute h-[120%] w-[120%] rounded-full blur-[100px] opacity-15"
-            style={{
-              background: 'radial-gradient(circle, rgba(59,130,246,0.5) 0%, rgba(96,165,250,0.3) 30%, rgba(147,197,253,0.15) 55%, transparent 80%)',
-              left: '30%',
-              top: '70%',
-              transform: 'translate(-50%, -50%)',
-              transition: 'left 0.6s ease-out, top 0.6s ease-out, background 1s ease-in-out',
-            }}
-          />
-        </div>
-
 
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
           <motion.div
