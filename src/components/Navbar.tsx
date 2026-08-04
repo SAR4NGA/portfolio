@@ -123,7 +123,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-md dark:border-gray-800 dark:bg-gray-950/80">
+    <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 dark:border-gray-800 dark:bg-gray-950/95">
       <div className="relative mx-auto flex max-w-5xl items-center justify-center px-6 py-2.5">
 
         <div className="hidden items-center gap-1 md:flex">
