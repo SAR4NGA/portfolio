@@ -6,7 +6,6 @@ interface Props {
 
 export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const pausedRef = useRef(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -15,6 +14,7 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
     if (!ctx) return
 
     let animId: number
+    let running = false
     let dpr = window.devicePixelRatio || 1
 
     const resize = () => {
@@ -91,14 +91,34 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('mouseout', onMouseLeave)
 
+    const startLoop = () => {
+      if (running) return
+      running = true
+      cancelAnimationFrame(animId)
+      animId = requestAnimationFrame(draw)
+    }
+
+    const stopLoop = () => {
+      running = false
+      cancelAnimationFrame(animId)
+    }
+
     const onVisibilityChange = () => {
-      pausedRef.current = document.hidden
+      if (document.hidden) {
+        stopLoop()
+      } else {
+        startLoop()
+      }
     }
     document.addEventListener('visibilitychange', onVisibilityChange)
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        pausedRef.current = !entry.isIntersecting || document.hidden
+        if (entry.isIntersecting && !document.hidden) {
+          startLoop()
+        } else {
+          stopLoop()
+        }
       },
       { threshold: 0 },
     )
@@ -172,15 +192,13 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
         ctx.fill()
       }
 
-      if (!pausedRef.current) {
-        animId = requestAnimationFrame(draw)
-      }
+      animId = requestAnimationFrame(draw)
     }
 
-    animId = requestAnimationFrame(draw)
+    startLoop()
 
     return () => {
-      cancelAnimationFrame(animId)
+      stopLoop()
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseout', onMouseLeave)
