@@ -44,10 +44,9 @@ function InfiniteMarqueeRow({
           }`}
         >
           {tripled.map((skill, i) => (
-            <motion.div
+            <div
               key={`${skill.name}-${i}`}
-              whileHover={{ y: -6, scale: 1.08 }}
-              className="group/item flex shrink-0 flex-col items-center justify-center p-3.5 sm:p-4 min-w-[90px] sm:min-w-[105px] rounded-2xl bg-gray-50 dark:bg-gray-800/90 dark:shadow-sm transition-all duration-300 dark:hover:shadow-xl cursor-default"
+              className="group/item flex shrink-0 flex-col items-center justify-center p-3.5 sm:p-4 min-w-[90px] sm:min-w-[105px] rounded-2xl bg-gray-50 dark:bg-gray-800/90 dark:shadow-sm transition-all duration-300 dark:hover:shadow-xl cursor-default hover:-translate-y-1.5 hover:scale-[1.08]"
             >
               <div className="flex h-13 w-13 sm:h-15 sm:w-15 items-center justify-center transition-transform duration-300 group-hover/item:scale-110">
                 <SkillIcon name={skill.icon} size={50} />
@@ -55,7 +54,7 @@ function InfiniteMarqueeRow({
               <span className="mt-2.5 text-center text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-gray-500 dark:text-gray-400 group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors">
                 {skill.name}
               </span>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
