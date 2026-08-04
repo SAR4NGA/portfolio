@@ -9,6 +9,35 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "LiteReader",
+    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
+    tech: [
+      "HTML",
+      "Kotlin"
+    ],
+    github: "https://github.com/SAR4NGA/liteReader"
+  },
+  {
+    title: "ADBMS Project",
+    description: "An advanced Budget & Expense Management System with a modern React dashboard and a REST API backed by Microsoft SQL Server. Vaultix helps organizations track expenses, enforce budgets, manage suppliers, run approval workflows, and surface business intelligence with forecasting and anomaly detection.",
+    tech: [
+      "JavaScript",
+      "TSQL",
+      "CSS",
+      "HTML",
+      "Dockerfile"
+    ],
+    github: "https://github.com/SAR4NGA/ADBMS_project"
+  },
+  {
+    title: "DeepSeekV4Pro Token Optimizer",
+    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
+    tech: [
+      "TypeScript"
+    ],
+    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer"
+  },
+  {
     title: "LiteCordChat",
     description: "liteCordChat is a high-performance, low-bandwidth voice coordination engine designed for users with limited data quotas and low-end hardware. It provides a \"zero-friction, zero-trace\" experience by eliminating mandatory accounts and social media bloat, focusing strictly on real-time team communication. ",
     tech: [
@@ -29,29 +58,8 @@ export const projects: Project[] = [
     github: "https://github.com/SAR4NGA/Network_Monitor"
   },
   {
-    title: "LiteReader",
-    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
-    tech: [
-      "HTML",
-      "Kotlin"
-    ],
-    github: "https://github.com/SAR4NGA/liteReader"
-  },
-  {
-    title: "ADBMS Project",
-    description: "",
-    tech: [
-      "JavaScript",
-      "TSQL",
-      "CSS",
-      "HTML",
-      "Dockerfile"
-    ],
-    github: "https://github.com/SAR4NGA/ADBMS_project"
-  },
-  {
     title: "FinancialTracker",
-    description: "A simple financial tracking web application built using ASP.NET Core Razor Pages to help me track my expenses and incomes. It can track, categorize and summarize my main expenses and incomes.",
+    description: "A simple financial tracking web application built using ASP.NET Core Razor Pages. This project is build to help me to track my expences and incomes.It can track,categorize and summerize my main expenses and incomes. Then Thought it'll be helpful to others too.",
     tech: [
       "C#",
       "HTML",
@@ -61,12 +69,16 @@ export const projects: Project[] = [
     github: "https://github.com/SAR4NGA/financialTracker"
   },
   {
-    title: "DeepSeekV4Pro Token Optimizer",
-    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
+    title: "Busapp",
+    description: "",
     tech: [
-      "TypeScript"
+      "Dart",
+      "HTML",
+      "Swift",
+      "Kotlin",
+      "Objective-C"
     ],
-    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer"
+    github: "https://github.com/SAR4NGA/busapp"
   },
   {
     title: "Inflex Mobile",
@@ -82,17 +94,5 @@ export const projects: Project[] = [
       "Objective-C"
     ],
     github: "https://github.com/SAR4NGA/inflex_mobile"
-  },
-  {
-    title: "Busapp",
-    description: "",
-    tech: [
-      "Dart",
-      "HTML",
-      "Swift",
-      "Kotlin",
-      "Objective-C"
-    ],
-    github: "https://github.com/SAR4NGA/busapp"
   }
 ]
