@@ -1,5 +1,12 @@
 const GH_USER = 'SAR4NGA'
 const EXCLUDE = ['portfolio', 'SAR4NGA']
+const { writeFileSync } = await import('fs')
+
+const MANUAL_DESCRIPTIONS = {
+  'busapp': 'A Flutter-based mobile app for real-time bus tracking, route planning, and public transit information. Designed to help commuters find nearby bus stops, track bus locations, and plan their journeys efficiently.',
+  'inflex_mobile': 'A cross-platform Flutter mobile application with native integrations, designed for flexible and scalable mobile experiences across iOS and Android. Utilizes platform channels for native functionality and efficient resource management.',
+  'SAR4NGA.github.io': "Pasindu Saranga's personal GitHub Pages site and portfolio.",
+}
 
 function toTitle(name) {
   return name
@@ -16,6 +23,7 @@ function shuffle(arr) {
 }
 
 async function main() {
+
   const res = await fetch(`https://api.github.com/users/${GH_USER}/repos?per_page=100&sort=updated`)
   const repos = await res.json()
   if (!Array.isArray(repos)) {
@@ -42,9 +50,14 @@ async function main() {
       if (repo.language) tech = [repo.language]
     }
 
+    if (tech.length === 0 && !repo.description && !MANUAL_DESCRIPTIONS[repo.name]) {
+      console.log(`  Skipping ${repo.name} (no languages, no description)`)
+      continue
+    }
+
     projects.push({
       title: toTitle(repo.name),
-      description: repo.description || '',
+      description: MANUAL_DESCRIPTIONS[repo.name] || repo.description || '',
       tech,
       github: repo.html_url,
       demo: repo.homepage || undefined,

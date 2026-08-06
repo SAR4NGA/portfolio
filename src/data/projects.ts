@@ -9,27 +9,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "LiteReader",
-    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
-    tech: [
-      "HTML",
-      "Kotlin"
-    ],
-    github: "https://github.com/SAR4NGA/liteReader"
-  },
-  {
-    title: "ADBMS Project",
-    description: "An advanced Budget & Expense Management System with a modern React dashboard and a REST API backed by Microsoft SQL Server. Vaultix helps organizations track expenses, enforce budgets, manage suppliers, run approval workflows, and surface business intelligence with forecasting and anomaly detection.",
-    tech: [
-      "JavaScript",
-      "TSQL",
-      "CSS",
-      "HTML",
-      "Dockerfile"
-    ],
-    github: "https://github.com/SAR4NGA/ADBMS_project"
-  },
-  {
     title: "DeepSeekV4Pro Token Optimizer",
     description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
     tech: [
@@ -58,19 +37,26 @@ export const projects: Project[] = [
     github: "https://github.com/SAR4NGA/Network_Monitor"
   },
   {
-    title: "FinancialTracker",
-    description: "A simple financial tracking web application built using ASP.NET Core Razor Pages. This project is build to help me to track my expences and incomes.It can track,categorize and summerize my main expenses and incomes. Then Thought it'll be helpful to others too.",
+    title: "ADBMS Project",
+    description: "An advanced Budget & Expense Management System with a modern React dashboard and a REST API backed by Microsoft SQL Server. Vaultix helps organizations track expenses, enforce budgets, manage suppliers, run approval workflows, and surface business intelligence with forecasting and anomaly detection.",
     tech: [
-      "C#",
-      "HTML",
+      "JavaScript",
+      "TSQL",
       "CSS",
-      "JavaScript"
+      "HTML",
+      "Dockerfile"
     ],
-    github: "https://github.com/SAR4NGA/financialTracker"
+    github: "https://github.com/SAR4NGA/ADBMS_project"
+  },
+  {
+    title: "SAR4NGA.Github.Io",
+    description: "Pasindu Saranga's personal GitHub Pages site and portfolio.",
+    tech: [],
+    github: "https://github.com/SAR4NGA/SAR4NGA.github.io"
   },
   {
     title: "Busapp",
-    description: "",
+    description: "A Flutter-based mobile app for real-time bus tracking, route planning, and public transit information. Designed to help commuters find nearby bus stops, track bus locations, and plan their journeys efficiently.",
     tech: [
       "Dart",
       "HTML",
@@ -82,7 +68,7 @@ export const projects: Project[] = [
   },
   {
     title: "Inflex Mobile",
-    description: "",
+    description: "A cross-platform Flutter mobile application with native integrations, designed for flexible and scalable mobile experiences across iOS and Android. Utilizes platform channels for native functionality and efficient resource management.",
     tech: [
       "Dart",
       "C++",
@@ -94,5 +80,25 @@ export const projects: Project[] = [
       "Objective-C"
     ],
     github: "https://github.com/SAR4NGA/inflex_mobile"
+  },
+  {
+    title: "FinancialTracker",
+    description: "A simple financial tracking web application built using ASP.NET Core Razor Pages. This project is build to help me to track my expences and incomes.It can track,categorize and summerize my main expenses and incomes. Then Thought it'll be helpful to others too.",
+    tech: [
+      "C#",
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    github: "https://github.com/SAR4NGA/financialTracker"
+  },
+  {
+    title: "LiteReader",
+    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
+    tech: [
+      "HTML",
+      "Kotlin"
+    ],
+    github: "https://github.com/SAR4NGA/liteReader"
   }
 ]
