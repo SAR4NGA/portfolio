@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Pasindu Saranga</title>
+        <title>Pasindu Saranga | Software Engineer</title>
       </Helmet>
 
       {/* Hero */}
@@ -65,7 +65,7 @@ export default function Home() {
         {/* Dark mode beam */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none hidden dark:block">
           <div className="absolute top-0 left-0 w-[200%] h-[200%] beam-dark-sharp" />
-          <div className="absolute top-0 left-0 w-[200%] h-[200%] blur-3xl beam-dark-glow" />
+          <div className="absolute top-0 left-0 w-[200%] h-[200%] blur-2xl beam-dark-glow" />
         </div>
 
         <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
@@ -77,12 +77,12 @@ export default function Home() {
             }}
             className="mb-1 font-mono text-blue-600 dark:text-blue-400"
           >
-            <span className="text-4xl">
+            <span className="text-3xl sm:text-4xl md:text-5xl">
               {"Hello,".split("").map((char, i) => (
                 <motion.span key={`h-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
               ))}
             </span>
-            <span className="text-3xl">
+            <span className="text-2xl sm:text-3xl md:text-4xl">
               {" I'm".split("").map((char, i) => (
                 <motion.span key={`i-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
               ))}
@@ -95,7 +95,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 1.0 }}
-              className="inline-block text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-700 dark:text-gray-300" 
+              className="inline-block text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-800 dark:text-gray-300" 
               style={{ fontFamily: '"Edu VIC WA NT Hand", cursive' }}
             >
               PASINDU
@@ -104,7 +104,8 @@ export default function Home() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 1.5 }}
-              className="inline-block ml-2 sm:ml-4 text-5xl sm:text-6xl md:text-8xl font-black bg-[#111827] dark:bg-white bg-no-repeat bg-[linear-gradient(90deg,#111827_35%,white_48%,#111827_65%)] dark:bg-[linear-gradient(90deg,#fff_35%,#e5e7eb_48%,#fff_65%)] bg-[length:300%_100%] bg-clip-text text-transparent  decoration-gray-900 dark:decoration-white decoration-2 animate-text-shine"
+              className="inline-block ml-2 sm:ml-4 text-5xl sm:text-6xl
+               md:text-8xl font-black bg-[#111827] dark:bg-white bg-no-repeat bg-[linear-gradient(90deg,#111827_35%,white_48%,#111827_65%)] dark:bg-[linear-gradient(90deg,#fff_35%,#e5e7eb_48%,#fff_65%)] bg-[length:300%_100%] bg-clip-text text-transparent  decoration-gray-900 dark:decoration-white decoration-2 animate-text-shine"
               style={{ animationDelay: '2.2s' }}
               >
               SARANGA
@@ -114,7 +115,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 2.0 }}
-            className="mb-6 text-md text-gray-800 dark:text-gray-400"
+            className="mb-6 text-sm text-black dark:text-gray-400"
           >
             Software Engineering Undergraduate
           </motion.p>
@@ -124,7 +125,7 @@ export default function Home() {
             variants={{
               visible: { transition: { staggerChildren: 0.02, delayChildren: 2.5 } },
             }}
-            className="mb-8 max-w-xl mx-auto text-lg text-gray-500 dark:text-gray-500"
+            className="mb-8 max-w-xl mx-auto text-lg text-gray-700 dark:text-gray-500"
           >
             {"From coursework to full stack systems, I like turning messy requirements into software that actually works.".split("").map((char, i) => (
               <motion.span key={`desc-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
@@ -192,13 +193,14 @@ export default function Home() {
           <div className="flex justify-center md:justify-start">
             <img
               src="/profile.png"
-              alt="Profile"
+              alt="Pasindu Saranga — Profile photo"
               width="600"
               height="600"
+              loading="lazy"
               className="w-full max-w-[600px] aspect-square rounded-2xl object-cover shadow-xl border-4 border-white dark:border-gray-800 transition-transform duration-300 hover:scale-[1.02]"
             />
           </div>
-          <div className="space-y-4 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+          <div className="space-y-4 text-lg text-gray-800 dark:text-gray-400 leading-relaxed">
             <p>
               I&apos;m a Software Engineering Undergraduate building products that make a difference. I focus on full-stack web development, with an eye for clean, performant user experiences.
             </p>
@@ -206,7 +208,7 @@ export default function Home() {
 My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to lightweight desktop tools. I care about writing code that's as readable as it is functional.            </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <span className="inline-flex items-center gap-1.5 text-base text-gray-500 dark:text-gray-500">
-                <MapPin size={14} /> Colombo, Sri Lanka
+                <MapPin size={14} /> Homagama, Sri Lanka
               </span>
               <span className="inline-flex items-center gap-1.5 text-base text-gray-500 dark:text-gray-500">
                 <Calendar size={14} /> Available for internships
@@ -216,10 +218,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
               <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Education</h3>
               <div className="flex items-start gap-3">
                 <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                    <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5" />
-                  </svg>
+                  <img src="/graduation-icon.png" alt="Graduation" width="24" height="24" />
                 </div>
                 <div>
                   <p className="text-base font-semibold text-gray-900 dark:text-white">NSBM Green University</p>
@@ -433,8 +432,8 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
             <a
               href="https://github.com/SAR4NGA"
               target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+              rel="noopener noreferrer me"
+              className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
             >
               <GithubIcon size={16} /> View Full Profile
             </a>
@@ -451,7 +450,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-lg text-center"
         >
-          <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
+          <p className="mb-8 text-lg text-gray-800 dark:text-gray-400">
             I&apos;m always open to new opportunities, collaborations, and interesting conversations. Feel free to reach out!
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
@@ -464,16 +463,16 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
             <a
               href="https://github.com/SAR4NGA"
               target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+              rel="noopener noreferrer me"
+              className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-base font-medium text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800"
             >
               <GithubIcon size={16} /> GitHub
             </a>
             <a
               href="https://www.linkedin.com/in/sar4nga"
               target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-base font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+              rel="noopener noreferrer me"
+              className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-6 py-3 text-base font-medium text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
             >
               <LinkedinIcon size={16} /> LinkedIn
             </a>
