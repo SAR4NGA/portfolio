@@ -236,7 +236,8 @@ body,
   height: 200%;
   background: linear-gradient(135deg, transparent 25%, var(--beam-primary-dark) 38%, var(--beam-secondary-dark) 45%, var(--beam-primary-dark) 52%, transparent 65%);
   animation: beam-drift-a 8s ease-in-out infinite;
-  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .beam-dark-glow {
@@ -247,7 +248,8 @@ body,
   height: 200%;
   background: linear-gradient(135deg, transparent 30%, var(--beam-tertiary-dark) 40%, var(--beam-secondary-dark) 48%, var(--beam-tertiary-dark) 56%, transparent 65%);
   animation: beam-drift-b 14s ease-in-out infinite;
-  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 
