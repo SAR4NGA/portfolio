@@ -19,10 +19,18 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
 
     const resize = () => {
       dpr = window.devicePixelRatio || 1
-      canvas.width = canvas.offsetWidth * dpr
-      canvas.height = canvas.offsetHeight * dpr
+      const w = canvas.offsetWidth
+      const h = canvas.offsetHeight
+      if (w === 0 || h === 0) return
+      canvas.width = w * dpr
+      canvas.height = h * dpr
     }
     resize()
+    const resizeObserver = new ResizeObserver(() => {
+      resize()
+      startLoop()
+    })
+    resizeObserver.observe(canvas)
     window.addEventListener('resize', resize)
 
     const TOTAL = 180
@@ -200,6 +208,7 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
     return () => {
       stopLoop()
       window.removeEventListener('resize', resize)
+      resizeObserver.disconnect()
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseout', onMouseLeave)
       document.removeEventListener('visibilitychange', onVisibilityChange)
