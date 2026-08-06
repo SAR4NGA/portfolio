@@ -11,7 +11,7 @@ export const certifications: Certification[] = [
   {
     title: 'Python Programming',
     issuer: 'University of Moratuwa',
-    date: '22.08.2024',
+    date: 'Aug 2024',
     description: 'Completed the Python Programming course at the University of Moratuwa, covering object-oriented programming, data structures, and an introduction to machine learning with Python.',
     skills: ['Python'],
     image: '/certs/Python_Programming_E-Certificate.png',
@@ -19,7 +19,7 @@ export const certifications: Certification[] = [
   {
     title: 'Python for Beginners',
     issuer: 'University of Moratuwa',
-    date: '20.03.2024',
+    date: 'Mar 2024',
     description: 'Completed the Python for Beginners course at the University of Moratuwa, covering fundamental Python syntax, control flow, functions, and basic programming logic.',
     skills: ['Python'],
     image: '/certs/Python_for_Beginners_E-Certificate.png',
@@ -27,7 +27,7 @@ export const certifications: Certification[] = [
   {
     title: 'Web Design for Beginners',
     issuer: 'University of Moratuwa',
-    date: '15.12.2023',
+    date: 'Dec 2023',
     description: 'Completed the Web Design for Beginners course at the University of Moratuwa, covering HTML5 semantics, CSS3 styling, responsive layouts, and foundational web design principles.',
     skills: ['HTML5', 'CSS3', 'Web Design'],
     image: '/certs/Web_Design_for_Beginners_E-Certificate.png',
