@@ -448,7 +448,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mx-auto max-w-lg text-center"
+          className="max-w-lg text-left"
         >
           <p className="mb-8 text-lg text-gray-800 dark:text-gray-400">
             I&apos;m always open to new opportunities, collaborations, and interesting conversations. Feel free to reach out!
