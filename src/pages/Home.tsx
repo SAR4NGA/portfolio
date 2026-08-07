@@ -453,7 +453,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
           <p className="mb-8 text-lg text-gray-800 dark:text-gray-400">
             I&apos;m always open to new opportunities, collaborations, and interesting conversations. Feel free to reach out!
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-start gap-4">
             <a
               href="mailto:swpsaranga@students.nsbm.ac.lk"
               className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
