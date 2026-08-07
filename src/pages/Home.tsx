@@ -125,7 +125,7 @@ export default function Home() {
             variants={{
               visible: { transition: { staggerChildren: 0.02, delayChildren: 2.5 } },
             }}
-            className="mb-8 max-w-xl mx-auto text-lg text-gray-700 dark:text-gray-500"
+            className="mb-8 max-w-xl text-lg text-gray-700 dark:text-gray-500"
           >
             {"From coursework to full stack systems, I like turning messy requirements into software that actually works.".split("").map((char, i) => (
               <motion.span key={`desc-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
