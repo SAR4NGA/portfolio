@@ -68,7 +68,7 @@ export default function Home() {
           <div className="absolute top-0 left-0 w-[200%] h-[200%] blur-2xl beam-dark-glow" />
         </div>
 
-        <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
+        <div className="relative mx-auto max-w-5xl px-6 py-20 text-left">
           <motion.div
             initial="hidden"
             animate="visible"
