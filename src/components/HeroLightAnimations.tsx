@@ -4,6 +4,40 @@ interface Props {
   color?: string
 }
 
+/*
+ * 4×4 opacity grid for light-mode hero animation (row-major).
+ * Matches the user's annotated zone map:
+ *   Row 1: medium(0.5) | low(0.2)      | more low(0.12) | not visible(0)
+ *   Row 2: high(0.85)  | very low(0.08) | not visible(0) | not visible(0)
+ *   Row 3: higher(1.0) | medium(0.5)    | low(0.2)       | medium(0.5)
+ *   Row 4: high(0.85)  | high(0.85)     | medium(0.5)    | high(0.85)
+ *
+ * Bilinear interpolation smoothly blends between cells —
+ * particles fade in/out as they drift across zone boundaries.
+ */
+// prettier-ignore
+const OPACITY_GRID = [
+  0.50, 0.20, 0.12, 0.00,
+  0.85, 0.08, 0.00, 0.00,
+  1.00, 0.50, 0.20, 0.50,
+  0.85, 0.85, 0.50, 0.85,
+]
+
+/** Sample the 4×4 opacity grid at a normalized (0–1) position with bilinear interpolation. */
+function sampleGrid(nx: number, ny: number): number {
+  const gx = Math.max(0, Math.min(nx * 4, 3.999))
+  const gy = Math.max(0, Math.min(ny * 4, 3.999))
+  const ix = gx | 0
+  const iy = gy | 0
+  const fx = gx - ix
+  const fy = gy - iy
+  const ix1 = Math.min(ix + 1, 3)
+  const iy1 = Math.min(iy + 1, 3)
+  const top = OPACITY_GRID[iy * 4 + ix] * (1 - fx) + OPACITY_GRID[iy * 4 + ix1] * fx
+  const bot = OPACITY_GRID[iy1 * 4 + ix] * (1 - fx) + OPACITY_GRID[iy1 * 4 + ix1] * fx
+  return top * (1 - fy) + bot * fy
+}
+
 export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -132,6 +166,9 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
     )
     observer.observe(canvas)
 
+    // Pre-allocate array for per-particle grid opacity (avoids GC pressure)
+    const gridAlphas = new Float32Array(TOTAL)
+
     const draw = () => {
       const w = canvas.offsetWidth
       const h = canvas.offsetHeight
@@ -139,6 +176,7 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.clearRect(0, 0, w, h)
 
+      // --- Phase 1: Move particles & compute per-particle zone opacity ---
       for (let i = 0; i < TOTAL; i++) {
         const p = particles[i]
 
@@ -159,12 +197,22 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
         if (p.x < -50 || p.x > w + 50 || p.y < -50 || p.y > h + 50) {
           Object.assign(p, initParticle())
         }
+
+        // Sample the opacity grid at this particle's current position
+        gridAlphas[i] = sampleGrid(p.x / w, p.y / h)
       }
 
+      // --- Phase 2: Draw connection lines (opacity = min of both endpoints) ---
       ctx.lineWidth = 1.0
       for (let i = 0; i < TOTAL; i++) {
+        const ga1 = gridAlphas[i]
         const p1 = particles[i]
+
         for (let j = i + 1; j < TOTAL; j++) {
+          const ga2 = gridAlphas[j]
+          const lineGa = Math.min(ga1, ga2)
+          if (lineGa < 0.01) continue // skip lines in invisible zones
+
           const p2 = particles[j]
           const dx = p1.x - p2.x
           const dy = p1.y - p2.y
@@ -172,7 +220,7 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
 
           if (distSq < CONN_DIST_SQ) {
             const dist = Math.sqrt(distSq)
-            const alpha = (1 - dist / CONN_DIST) * 0.5
+            const alpha = (1 - dist / CONN_DIST) * 0.5 * lineGa
             ctx.beginPath()
             ctx.moveTo(p1.x, p1.y)
             ctx.lineTo(p2.x, p2.y)
@@ -181,22 +229,29 @@ export default function HeroNetworkAnimation({ color: _color = '100, 116, 139' }
           }
         }
 
-        const distToMouse = Math.hypot(p1.x - mouse.x, p1.y - mouse.y)
-        if (distToMouse < CONN_DIST) {
-          const alpha = (1 - distToMouse / CONN_DIST) * 0.6
-          ctx.beginPath()
-          ctx.moveTo(p1.x, p1.y)
-          ctx.lineTo(mouse.x, mouse.y)
-          ctx.strokeStyle = `rgba(${p1.color}, ${alpha})`
-          ctx.stroke()
+        // Mouse connection line
+        if (ga1 > 0.01) {
+          const distToMouse = Math.hypot(p1.x - mouse.x, p1.y - mouse.y)
+          if (distToMouse < CONN_DIST) {
+            const alpha = (1 - distToMouse / CONN_DIST) * 0.6 * ga1
+            ctx.beginPath()
+            ctx.moveTo(p1.x, p1.y)
+            ctx.lineTo(mouse.x, mouse.y)
+            ctx.strokeStyle = `rgba(${p1.color}, ${alpha})`
+            ctx.stroke()
+          }
         }
       }
 
+      // --- Phase 3: Draw particle dots ---
       for (let i = 0; i < TOTAL; i++) {
+        const ga = gridAlphas[i]
+        if (ga < 0.01) continue // skip invisible particles entirely
+
         const p = particles[i]
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${p.color}, ${p.baseAlpha})`
+        ctx.fillStyle = `rgba(${p.color}, ${p.baseAlpha * ga})`
         ctx.fill()
       }
 
