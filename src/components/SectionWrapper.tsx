@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import type { ReactNode } from 'react'
+import type { ReactNode, CSSProperties } from 'react'
 
 interface SectionWrapperProps {
   id: string
@@ -7,11 +7,20 @@ interface SectionWrapperProps {
   subtitle?: string
   children: ReactNode
   className?: string
+  /** Pass true for alternating "tinted" sections instead of className dark bg */
+  darkAlt?: boolean
 }
 
-export default function SectionWrapper({ id, title, subtitle, children, className = '' }: SectionWrapperProps) {
+export default function SectionWrapper({ id, title, subtitle, children, className = '', darkAlt = false }: SectionWrapperProps) {
+  // Strip the dark:bg-gray-900/50 portion from className when darkAlt is used
+  const lightClass = className.replace(/dark:bg-\S+/g, '').trim()
+
+  const style: CSSProperties = darkAlt
+    ? { backgroundColor: 'var(--dark-bg-alt, rgba(17,24,39,0.5))' }
+    : {}
+
   return (
-    <section id={id} className={`py-20 ${className}`}>
+    <section id={id} className={`py-20 ${darkAlt ? lightClass : className}`} style={style}>
       <div className="mx-auto max-w-5xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}

@@ -186,7 +186,10 @@ export default function Home() {
       </section>
 
       {/* Content wrapper */}
-      <div className="relative z-10 bg-white dark:bg-gray-950">
+      <div
+        className="relative z-10"
+        style={{ backgroundColor: 'var(--dark-bg-content, white)' }}
+      >
 
       {/* About */}
       <SectionWrapper id="about" title="About" subtitle="A little about me">
@@ -232,7 +235,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
       </SectionWrapper>
 
       {/* Skills */}
-      <SectionWrapper id="skills" title="Skills" subtitle="Technologies I worked with" className="bg-gray-50 dark:bg-gray-900/50">
+      <SectionWrapper id="skills" title="Skills" subtitle="Technologies I worked with" className="bg-gray-50" darkAlt>
         <SkillsGrid skills={skills} />
       </SectionWrapper>
 
@@ -289,7 +292,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
       </SectionWrapper>
 
       {/* Projects & GitHub Status */}
-      <SectionWrapper id="projects" title={projectsTab === 'projects' ? 'Projects' : 'GitHub Status'} subtitle={projectsTab === 'projects' ? "Things I've built" : 'My open-source activity'} className="bg-gray-50 dark:bg-gray-900/50">
+      <SectionWrapper id="projects" title={projectsTab === 'projects' ? 'Projects' : 'GitHub Status'} subtitle={projectsTab === 'projects' ? "Things I've built" : 'My open-source activity'} className="bg-gray-50" darkAlt>
         {/* Centered tab toggle */}
         <div className="mb-8 flex justify-center">
           <div className="inline-flex rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
