@@ -95,7 +95,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 1.0 }}
-              className="inline-block text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-800 dark:text-gray-300" 
+              className="inline-block text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-800 dark:text-gray-200" 
               style={{ fontFamily: '"Edu VIC WA NT Hand", cursive' }}
             >
               PASINDU
@@ -115,7 +115,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 2.0 }}
-            className="mb-6 text-sm text-black dark:text-gray-400"
+            className="mb-6 text-sm text-black dark:text-gray-300"
           >
             Software Engineering Undergraduate
           </motion.p>
@@ -125,7 +125,8 @@ export default function Home() {
             variants={{
               visible: { transition: { staggerChildren: 0.02, delayChildren: 2.5 } },
             }}
-            className="mb-8 max-w-xl text-lg text-gray-700 dark:text-gray-500"
+            className="mb-8 max-w-xl text-lg text-gray-700 dark:text-gray-400 transition-all duration-300"
+            style={{ fontFamily: '"Outfit", sans-serif' }}
           >
             {"From coursework to full stack systems, I like turning messy requirements into software that actually works.".split("").map((char, i) => (
               <motion.span key={`desc-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
