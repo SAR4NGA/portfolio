@@ -14,18 +14,6 @@ import { skills } from '../data/skills'
 import { projects } from '../data/projects'
 import { certifications } from '../data/certifications'
 
-/*
- * Pre-computed SVG mask for the light-mode hero particle animation.
- * 4×4 grid opacity map (matches user's annotated grid):
- *   Row 1: medium | low      | more low     | not visible
- *   Row 2: high   | very low | not visible  | not visible
- *   Row 3: higher | medium   | low          | medium
- *   Row 4: high   | high     | medium       | high
- * feGaussianBlur (stdDeviation=40) blends cell boundaries smoothly.
- */
-const HERO_MASK_SVG = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'><defs><filter id='f' x='-5%' y='-5%' width='110%' height='110%'><feGaussianBlur stdDeviation='40'/></filter></defs><g filter='url(#f)'><rect x='0' y='0' width='250' height='250' fill='rgb(100,100,100)'/><rect x='250' y='0' width='250' height='250' fill='rgb(45,45,45)'/><rect x='500' y='0' width='250' height='250' fill='rgb(25,25,25)'/><rect x='750' y='0' width='250' height='250' fill='rgb(0,0,0)'/><rect x='0' y='250' width='250' height='250' fill='rgb(180,180,180)'/><rect x='250' y='250' width='250' height='250' fill='rgb(15,15,15)'/><rect x='500' y='250' width='250' height='250' fill='rgb(0,0,0)'/><rect x='750' y='250' width='250' height='250' fill='rgb(0,0,0)'/><rect x='0' y='500' width='250' height='250' fill='rgb(230,230,230)'/><rect x='250' y='500' width='250' height='250' fill='rgb(100,100,100)'/><rect x='500' y='500' width='250' height='250' fill='rgb(45,45,45)'/><rect x='750' y='500' width='250' height='250' fill='rgb(100,100,100)'/><rect x='0' y='750' width='250' height='250' fill='rgb(180,180,180)'/><rect x='250' y='750' width='250' height='250' fill='rgb(180,180,180)'/><rect x='500' y='750' width='250' height='250' fill='rgb(100,100,100)'/><rect x='750' y='750' width='250' height='250' fill='rgb(180,180,180)'/></g></svg>`
-const heroMaskImage = `url("data:image/svg+xml,${encodeURIComponent(HERO_MASK_SVG)}")`
-
 export default function Home() {
   const [projectView, setProjectView] = useState<'grid' | 'carousel'>('carousel')
   const [projectsTab, setProjectsTab] = useState<'projects' | 'github'>('projects')
@@ -46,20 +34,9 @@ export default function Home() {
         {/* Base background */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-50 dark:from-[#0a0f1c] dark:via-[#0c1222] dark:to-[#0a0f1c]" />
 
-        {/* Light mode animation (hidden in dark mode) — masked with curved opacity zones */}
+        {/* Light mode animation (hidden in dark mode) — opacity zones handled per-particle in canvas */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none dark:hidden">
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              maskImage: heroMaskImage,
-              WebkitMaskImage: heroMaskImage,
-              maskSize: '100% 100%',
-              WebkitMaskSize: '100% 100%',
-            }}
-          >
-            <HeroNetworkAnimation color="59, 130, 246" />
-          </div>
+          <HeroNetworkAnimation color="59, 130, 246" />
         </div>
 
         {/* Dark mode beam */}
@@ -89,13 +66,13 @@ export default function Home() {
             </span>
           </motion.div>
           <h1
-            className="mb-2 font-extrabold tracking-tight text-gray-900 dark:text-white"
+            className="mb-2 flex flex-col md:flex-row md:items-baseline md:flex-wrap font-extrabold tracking-tight text-gray-900 dark:text-white"
           >
             <motion.span 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 1.0 }}
-              className="inline-block text-4xl sm:text-5xl md:text-7xl font-extrabold text-gray-800 dark:text-gray-200" 
+              className="block md:inline-block text-5xl sm:text-6xl md:text-7xl font-extrabold text-gray-800 dark:text-gray-200" 
               style={{ fontFamily: '"Edu VIC WA NT Hand", cursive' }}
             >
               PASINDU
@@ -104,7 +81,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 1.5 }}
-              className="inline-block ml-2 sm:ml-4 text-5xl sm:text-6xl
+              className="block md:inline-block md:ml-4 text-6xl sm:text-7xl
                md:text-8xl font-black bg-[#111827] dark:bg-white bg-no-repeat bg-[linear-gradient(90deg,#111827_35%,white_48%,#111827_65%)] dark:bg-[linear-gradient(90deg,#fff_35%,#e5e7eb_48%,#fff_65%)] bg-[length:300%_100%] bg-clip-text text-transparent  decoration-gray-900 dark:decoration-white decoration-2 animate-text-shine"
               style={{ animationDelay: '2.2s' }}
               >
@@ -187,8 +164,7 @@ export default function Home() {
 
       {/* Content wrapper */}
       <div
-        className="relative z-10"
-        style={{ backgroundColor: 'var(--dark-bg-content, white)' }}
+        className="relative z-10 bg-white dark:bg-[var(--dark-bg-content,#030712)]"
       >
 
       {/* About */}
