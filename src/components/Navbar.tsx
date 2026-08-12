@@ -124,7 +124,7 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 dark:border-gray-800 dark:bg-gray-950/95">
-      <div className="relative mx-auto flex max-w-5xl items-center justify-center px-6 py-2.5">
+      <div className="relative mx-auto flex max-w-5xl items-center justify-center px-6 py-1">
 
         <div className="hidden items-center gap-1 md:flex">
           {navLinks.map(link => {
@@ -134,7 +134,7 @@ export default function Navbar() {
               <button
                 key={link.href}
                 onClick={() => isHome ? scrollTo(link.href) : (window.location.href = `/${link.href}`)}
-                className={`relative px-4 py-1.5 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:rounded ${
+                className={`relative px-3 py-1 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:rounded ${
                   isActive
                     ? 'text-gray-900 dark:text-white'
                     : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
@@ -154,27 +154,27 @@ export default function Navbar() {
 
           <button
             onClick={toggleTheme}
-            className="ml-6 rounded-lg p-2 min-h-[44px] min-w-[44px] text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="ml-4 rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
             aria-label="Toggle theme"
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
           <button
             onClick={toggleTheme}
-            className="rounded-lg p-2 min-h-[44px] min-w-[44px] text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
             aria-label="Toggle theme"
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="rounded-lg p-2 min-h-[44px] min-w-[44px] text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
