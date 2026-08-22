@@ -32,7 +32,7 @@ export default function Home() {
         className="sticky top-0 z-0 flex min-h-[calc(100vh-4rem)] items-center overflow-x-hidden"
       >
         {/* Base background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-slate-50 to-indigo-50 dark:from-[#0a0f1c] dark:via-[#0c1222] dark:to-[#0a0f1c]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100 dark:from-[#0a0f1c] dark:via-[#0c1222] dark:to-[#0a0f1c]" />
 
         {/* Light mode animation — stays mounted in dark mode (opacity 0) so particles don't reset */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-500 opacity-100 dark:opacity-0">
