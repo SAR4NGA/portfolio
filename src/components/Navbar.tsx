@@ -154,7 +154,7 @@ export default function Navbar() {
 
           <button
             onClick={toggleTheme}
-            className="ml-4 rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="ml-4 rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
@@ -164,14 +164,14 @@ export default function Navbar() {
         <div className="flex items-center gap-2 md:hidden">
           <button
             onClick={toggleTheme}
-            className="rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+            className="rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={18} /> : <Menu size={18} />}
