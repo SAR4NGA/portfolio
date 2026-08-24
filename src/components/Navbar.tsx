@@ -123,8 +123,8 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 dark:border-gray-800 dark:bg-gray-950/95">
-      <div className="relative mx-auto flex max-w-5xl items-center justify-center px-6 py-1">
+    <nav className="sticky top-0 z-50 pointer-events-none">
+      <div className="relative mx-auto flex max-w-5xl items-center justify-center px-6 py-3">
 
         <div className="hidden items-center gap-3 md:flex">
           {/* Pill container — matches Skills section tab style */}
@@ -144,7 +144,7 @@ export default function Navbar() {
                 >
                   <span className="relative z-10">{link.label}</span>
                   <motion.div
-                    className="absolute bottom-0 h-0.5 rounded-full bg-blue-600 dark:bg-blue-400"
+                    className="absolute bottom-0 h-0.5 rounded-full bg-gray-900 dark:bg-white"
                     style={{
                       left: derivedRef.current[link.id].left,
                       width: derivedRef.current[link.id].width,
@@ -157,7 +157,7 @@ export default function Navbar() {
 
           <button
             onClick={toggleTheme}
-            className="ml-4 rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            className="rounded-full p-2 text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
