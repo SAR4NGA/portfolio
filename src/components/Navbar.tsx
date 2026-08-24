@@ -126,31 +126,34 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 dark:border-gray-800 dark:bg-gray-950/95">
       <div className="relative mx-auto flex max-w-5xl items-center justify-center px-6 py-1">
 
-        <div className="hidden items-center gap-1 md:flex">
-          {navLinks.map(link => {
-            const isActive = activeSection === link.id
+        <div className="hidden items-center gap-3 md:flex">
+          {/* Pill container — matches Skills section tab style */}
+          <div className="inline-flex rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
+            {navLinks.map(link => {
+              const isActive = activeSection === link.id
 
-            return (
-              <button
-                key={link.href}
-                onClick={() => isHome ? scrollTo(link.href) : (window.location.href = `/${link.href}`)}
-                className={`relative px-3 py-1 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:rounded ${
-                  isActive
-                    ? 'text-gray-900 dark:text-white'
-                    : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
-                }`}
-              >
-                <span className="relative z-10">{link.label}</span>
-                <motion.div
-                  className="absolute bottom-0 h-0.5 rounded-full bg-blue-600 dark:bg-blue-400"
-                  style={{
-                    left: derivedRef.current[link.id].left,
-                    width: derivedRef.current[link.id].width,
-                  }}
-                />
-              </button>
-            )
-          })}
+              return (
+                <button
+                  key={link.href}
+                  onClick={() => isHome ? scrollTo(link.href) : (window.location.href = `/${link.href}`)}
+                  className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                    isActive
+                      ? 'text-gray-900 dark:text-white'
+                      : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+                  }`}
+                >
+                  <span className="relative z-10">{link.label}</span>
+                  <motion.div
+                    className="absolute bottom-0 h-0.5 rounded-full bg-blue-600 dark:bg-blue-400"
+                    style={{
+                      left: derivedRef.current[link.id].left,
+                      width: derivedRef.current[link.id].width,
+                    }}
+                  />
+                </button>
+              )
+            })}
+          </div>
 
           <button
             onClick={toggleTheme}
