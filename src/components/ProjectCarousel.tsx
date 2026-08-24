@@ -1,109 +1,222 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import ProjectCard from './ProjectCard'
+import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
+import { GithubIcon } from './Icons'
 import type { Project } from '../data/projects'
 
-const CARDS_PER_SLIDE = 4
-const AUTO_INTERVAL = 4000
+const AUTO_INTERVAL = 6000
 
 export default function ProjectCarousel({ projects }: { projects: Project[] }) {
-  const totalSlides = Math.ceil(projects.length / CARDS_PER_SLIDE)
-  const [slide, setSlide] = useState(0)
+  const total = projects.length
+  const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
+  const [isPaused, setIsPaused] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined)
-
-  const goTo = useCallback(
-    (next: number) => {
-      setDirection(next > slide ? 1 : -1)
-      setSlide(next)
-    },
-    [slide],
-  )
 
   const next = useCallback(() => {
     setDirection(1)
-    setSlide(s => (s + 1) % totalSlides)
-  }, [totalSlides])
+    setCurrent(s => (s + 1) % total)
+  }, [total])
 
   const prev = useCallback(() => {
     setDirection(-1)
-    setSlide(s => (s - 1 + totalSlides) % totalSlides)
-  }, [totalSlides])
+    setCurrent(s => (s - 1 + total) % total)
+  }, [total])
 
+  const goTo = useCallback(
+    (idx: number) => {
+      setDirection(idx > current ? 1 : idx < current ? -1 : 0)
+      setCurrent(idx)
+    },
+    [current],
+  )
+
+  // Auto-advance
   useEffect(() => {
+    if (isPaused) return
     timerRef.current = setInterval(next, AUTO_INTERVAL)
     return () => clearInterval(timerRef.current)
-  }, [next])
+  }, [next, isPaused])
 
   const resetTimer = () => {
     clearInterval(timerRef.current)
-    timerRef.current = setInterval(next, AUTO_INTERVAL)
+    if (!isPaused) {
+      timerRef.current = setInterval(next, AUTO_INTERVAL)
+    }
   }
 
-  const currentProjects = projects.slice(slide * CARDS_PER_SLIDE, (slide + 1) * CARDS_PER_SLIDE)
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') { next(); resetTimer() }
+      if (e.key === 'ArrowLeft') { prev(); resetTimer() }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [next, prev])
 
+  if (total === 0) return null
+
+  const prevIdx = (current - 1 + total) % total
+  const nextIdx = (current + 1) % total
+
+  const project = projects[current]
+  const prevProject = projects[prevIdx]
+  const nextProject = projects[nextIdx]
+
+  // Slide animation for the center card
   const slideVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (dir: number) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
+    enter: (dir: number) => ({
+      x: dir > 0 ? 60 : -60,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (dir: number) => ({
+      x: dir > 0 ? -60 : 60,
+      opacity: 0,
+    }),
   }
 
-  if (projects.length === 0) return null
+  // Side card (prev/next preview)
+  const SideCard = ({
+    proj,
+    side,
+    onClick,
+  }: {
+    proj: Project
+    side: 'left' | 'right'
+    onClick: () => void
+  }) => (
+    <button
+      onClick={onClick}
+      className={`hidden lg:flex flex-col justify-center w-full rounded-xl border border-gray-200 bg-white/60 p-5 text-left backdrop-blur-sm transition-all duration-300 hover:border-blue-200 hover:bg-white/80 dark:border-gray-800 dark:bg-gray-950/60 dark:hover:border-blue-900 dark:hover:bg-gray-950/80 cursor-pointer ${
+        side === 'left' ? 'items-end text-right' : 'items-start text-left'
+      }`}
+      aria-label={`Go to project: ${proj.title}`}
+    >
+      <h4 className="mb-1 text-sm font-semibold text-gray-400 dark:text-gray-500 truncate max-w-full">
+        {proj.title}
+      </h4>
+      <p className="text-xs text-gray-400 dark:text-gray-600 line-clamp-2">
+        {proj.description || 'No description yet.'}
+      </p>
+    </button>
+  )
 
   return (
-    <div className="relative">
-      <AnimatePresence initial={false} custom={direction} mode="wait">
-        <motion.div
-          key={slide}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.35, ease: 'easeInOut' }}
-        >
-          <div className="grid gap-6 sm:grid-cols-2">
-            {currentProjects.map((project, i) => (
-              <ProjectCard key={project.title} project={project} index={i} />
-            ))}
+    <div
+      className="relative"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Three-column layout: prev | active | next */}
+      <div className="flex items-stretch gap-3 lg:gap-4">
+        {/* Previous project preview */}
+        <div className="hidden lg:flex w-[160px] shrink-0 opacity-50 hover:opacity-70 transition-opacity duration-300">
+          <SideCard proj={prevProject} side="left" onClick={() => { prev(); resetTimer() }} />
+        </div>
+
+        {/* Active project — center */}
+        <div className="flex-1 min-w-0 max-w-2xl mx-auto relative">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+            {/* Subtle blue accent line */}
+            <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-blue-500 to-blue-400 dark:from-blue-500 dark:to-blue-600 z-10" />
+
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={current}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="p-6 sm:p-8"
+              >
+                {/* Counter */}
+                <span className="mb-3 inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
+                  {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+                </span>
+
+                {/* Title */}
+                <h3 className="mb-2 text-xl font-bold tracking-tight text-gray-900 sm:text-2xl dark:text-white">
+                  {project.title}
+                </h3>
+
+                {/* Description */}
+                <p className="mb-5 text-base leading-relaxed text-gray-600 dark:text-gray-400">
+                  {project.description || 'No description yet.'}
+                </p>
+
+                {/* Tech stack */}
+                {project.tech.length > 0 && (
+                  <div className="mb-5 flex flex-wrap gap-2">
+                    {project.tech.map(tech => (
+                      <span
+                        key={tech}
+                        className="rounded-full bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Links */}
+                <div className="flex items-center gap-3">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+                  >
+                    <GithubIcon size={14} /> View Code
+                  </a>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+                    >
+                      <ExternalLink size={14} /> Live Demo
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </motion.div>
-      </AnimatePresence>
 
-      {totalSlides > 1 && (
-        <>
-          <button
-            onClick={() => { prev(); resetTimer() }}
-            className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 min-h-[44px] min-w-[44px] shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft size={20} className="text-gray-600 dark:text-gray-400" />
-          </button>
-          <button
-            onClick={() => { next(); resetTimer() }}
-            className="absolute -right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 min-h-[44px] min-w-[44px] shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800"
-            aria-label="Next slide"
-          >
-            <ChevronRight size={20} className="text-gray-600 dark:text-gray-400" />
-          </button>
-
-          <div className="mt-6 flex items-center justify-center gap-2">
-            {Array.from({ length: totalSlides }).map((_, i) => (
+          {/* Arrow buttons */}
+          {total > 1 && (
+            <>
               <button
-                key={i}
-                onClick={() => { goTo(i); resetTimer() }}
-                className={`h-2 rounded-full transition-all ${
-                  i === slide
-                    ? 'w-6 bg-blue-600 dark:bg-blue-400'
-                    : 'w-2 bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600'
-                }`}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
-        </>
-      )}
+                onClick={() => { prev(); resetTimer() }}
+                className="absolute -left-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 lg:-left-5"
+                aria-label="Previous project"
+              >
+                <ChevronLeft size={18} className="text-gray-500 dark:text-gray-400" />
+              </button>
+              <button
+                onClick={() => { next(); resetTimer() }}
+                className="absolute -right-3 top-1/2 z-10 -translate-y-1/2 rounded-full border border-gray-200 bg-white p-2 shadow-sm transition-all hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800 lg:-right-5"
+                aria-label="Next project"
+              >
+                <ChevronRight size={18} className="text-gray-500 dark:text-gray-400" />
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Next project preview */}
+        <div className="hidden lg:flex w-[160px] shrink-0 opacity-50 hover:opacity-70 transition-opacity duration-300">
+          <SideCard proj={nextProject} side="right" onClick={() => { next(); resetTimer() }} />
+        </div>
+      </div>
     </div>
   )
 }
