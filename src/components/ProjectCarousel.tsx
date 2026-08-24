@@ -135,7 +135,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
 
         {/* Active project — center */}
         <div className="flex-1 min-w-0 max-w-2xl mx-auto relative">
-          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950">
+          <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 min-h-[480px] sm:min-h-[500px] flex flex-col">
             {/* Subtle blue accent line */}
             <div className="absolute top-0 left-0 h-[2px] w-full bg-gradient-to-r from-blue-500 to-blue-400 dark:from-blue-500 dark:to-blue-600 z-10" />
 
@@ -147,7 +147,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
                 {/* Project image */}
                 {project.image && (
@@ -161,7 +161,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
                   </div>
                 )}
 
-                <div className="p-6 sm:p-8">
+                <div className="p-6 sm:p-8 flex-1 overflow-y-auto">
                   {/* Counter */}
                   <span className="mb-3 inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-600 dark:bg-blue-950/40 dark:text-blue-400">
                     {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
