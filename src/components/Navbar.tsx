@@ -128,7 +128,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           {/* Pill container — matches Skills section tab style */}
-          <div className="pointer-events-auto inline-flex rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
+          <div className="pointer-events-auto inline-flex overflow-hidden rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
             {navLinks.map(link => {
               const isActive = activeSection === link.id
 
