@@ -128,7 +128,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           {/* Pill container — matches Skills section tab style */}
-          <div className="inline-flex rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
+          <div className="pointer-events-auto inline-flex rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
             {navLinks.map(link => {
               const isActive = activeSection === link.id
 
@@ -157,14 +157,14 @@ export default function Navbar() {
 
           <button
             onClick={toggleTheme}
-            className="rounded-full p-2 text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            className="pointer-events-auto rounded-full p-2 text-gray-500 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="pointer-events-auto flex items-center gap-2 md:hidden">
           <button
             onClick={toggleTheme}
             className="rounded-lg p-1.5 min-h-[36px] min-w-[36px] text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
