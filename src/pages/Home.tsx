@@ -35,7 +35,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-slate-50 to-gray-100 dark:from-[#0a0f1c] dark:via-[#0c1222] dark:to-[#0a0f1c]" />
 
         {/* Light mode animation — stays mounted in dark mode (opacity 0) so particles don't reset */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-500 opacity-100 dark:opacity-0">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-150 opacity-100 dark:opacity-0">
           <HeroNetworkAnimation color="59, 130, 246" />
         </div>
 
