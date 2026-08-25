@@ -41,7 +41,7 @@ export default function Navbar() {
     const left = useTransform(sweep, (s: number) => (s <= 100 ? '0%' : `${s - 100}%`))
     const width = useTransform(sweep, (s: number) => {
       const w = s <= 100 ? s : 200 - s
-      return w < 3 ? '0%' : `${w}%`
+      return w < 10 ? '0%' : `${w}%`
     })
     derivedRef.current[id] = { left, width }
   }
@@ -128,7 +128,7 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           {/* Pill container — matches Skills section tab style */}
-          <div className="pointer-events-auto inline-flex overflow-hidden rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
+          <div className="pointer-events-auto inline-flex items-center gap-1.5 overflow-hidden rounded-full border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-900">
             {navLinks.map(link => {
               const isActive = activeSection === link.id
 
@@ -136,7 +136,7 @@ export default function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => isHome ? scrollTo(link.href) : (window.location.href = `/${link.href}`)}
-                  className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                  className={`relative rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                     isActive
                       ? 'text-gray-900 dark:text-white'
                       : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
