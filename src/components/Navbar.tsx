@@ -123,7 +123,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 pointer-events-none">
+    <nav className="fixed top-0 left-0 w-full z-50 pointer-events-none">
       <div className="relative mx-auto flex max-w-5xl items-center justify-center px-6 py-3">
 
         <div className="hidden items-center gap-3 md:flex">
