@@ -11,10 +11,10 @@ export default function App() {
   return (
     <>
       <Helmet>
-        <title>Pasindu Saranga — Software Engineer</title>
+        <title>Pasindu Saranga — Software Engineering Undergraduate</title>
         <meta
           name="description"
-          content="Pasindu Saranga — Software Engineer. Portfolio of full-stack, Flutter, React, and Python projects."
+          content="Pasindu Saranga — Software Engineering Undergraduate. Portfolio of full-stack, Flutter, React, and Python projects."
         />
         <meta property="og:image" content="https://pasindusaranga.me/og-image.png" />
         <script type="application/ld+json">
@@ -23,7 +23,7 @@ export default function App() {
               "@context": "https://schema.org",
               "@type": "Person",
               "name": "Pasindu Saranga",
-              "jobTitle": "Software Engineer",
+              "jobTitle": "Software Engineering Undergraduate",
               "url": "https://pasindusaranga.me",
               "sameAs": [
                 "https://github.com/SAR4NGA",

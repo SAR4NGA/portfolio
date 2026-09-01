@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import Typewriter from '../components/Typewriter'
 import HeroNetworkAnimation from '../components/HeroLightAnimations'
 import LazyGitHubCalendar from '../components/LazyGitHubCalendar'
 import { motion } from 'framer-motion'
@@ -23,7 +24,7 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Pasindu Saranga | Software Engineer</title>
+        <title>Pasindu Saranga | Software Engineering Undergraduate</title>
       </Helmet>
 
       {/* Hero */}
@@ -95,19 +96,19 @@ export default function Home() {
           >
             Software Engineering Undergraduate
           </motion.p>
-          <motion.p
-            initial="hidden"
-            animate="visible"
-            variants={{
-              visible: { transition: { staggerChildren: 0.02, delayChildren: 2.5 } },
-            }}
+          <Typewriter
+            segments={[
+              {
+                text: 'From coursework to full stack systems, I like turning messy requirements into software that actually works.',
+              },
+            ]}
+            speed={40}
+            startDelay={2500}
+            as="p"
             className="mb-8 max-w-xl text-lg text-gray-700 dark:text-gray-400 transition-all duration-300"
             style={{ fontFamily: '"Outfit", sans-serif' }}
-          >
-            {"From coursework to full stack systems, I like turning messy requirements into software that actually works.".split("").map((char, i) => (
-              <motion.span key={`desc-${i}`} variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>{char}</motion.span>
-            ))}
-          </motion.p>
+            cursorClassName="bg-gray-700 dark:bg-gray-400"
+          />
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
