@@ -247,6 +247,12 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
       {/* Dot indicators with progress animation */}
       {total > 1 && (
         <div className="mt-6 flex items-center justify-center gap-2">
+          <style>{`
+            @keyframes progress-fill {
+              from { transform: scaleX(0); }
+              to   { transform: scaleX(1); }
+            }
+          `}</style>
           {projects.map((_, i) => (
             <button
               key={i}
@@ -257,14 +263,15 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
             >
               {/* Inactive background */}
               <span className="absolute inset-0 rounded-full bg-gray-200 dark:bg-gray-800" />
-              {/* Active fill with progress */}
+              {/* Active fill with smooth progress */}
               {i === current && (
-                <motion.span
+                <span
+                  key={`progress-${current}`}
                   className="absolute inset-0 rounded-full bg-gray-900 dark:bg-white"
-                  initial={{ scaleX: 0, transformOrigin: 'left' }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: isPaused ? 0 : AUTO_INTERVAL / 1000, ease: 'linear' }}
-                  key={`progress-${current}-${isPaused}`}
+                  style={{
+                    transformOrigin: 'left',
+                    animation: `progress-fill ${AUTO_INTERVAL}ms linear forwards`,
+                  }}
                 />
               )}
             </button>
