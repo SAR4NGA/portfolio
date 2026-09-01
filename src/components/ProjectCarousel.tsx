@@ -270,7 +270,9 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
                   className="absolute inset-0 rounded-full bg-gray-900 dark:bg-white"
                   style={{
                     transformOrigin: 'left',
+                    willChange: 'transform',
                     animation: `progress-fill ${AUTO_INTERVAL}ms linear forwards`,
+                    animationPlayState: isPaused ? 'paused' : 'running',
                   }}
                 />
               )}
