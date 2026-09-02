@@ -5,6 +5,7 @@ export interface Certification {
   description: string
   skills: string[]
   image?: string
+  pdf?: string
 }
 
 export const certifications: Certification[] = [
@@ -15,6 +16,7 @@ export const certifications: Certification[] = [
     description: 'Completed the Python Programming course at the University of Moratuwa, covering object-oriented programming, data structures, and an introduction to machine learning with Python.',
     skills: ['Python'],
     image: '/certs/Python_Programming_E-Certificate.png',
+    pdf: '/certs/Python_Programming_E-Certificate.pdf',
   },
   {
     title: 'Python for Beginners',
@@ -23,6 +25,7 @@ export const certifications: Certification[] = [
     description: 'Completed the Python for Beginners course at the University of Moratuwa, covering fundamental Python syntax, control flow, functions, and basic programming logic.',
     skills: ['Python'],
     image: '/certs/Python_for_Beginners_E-Certificate.png',
+    pdf: '/certs/Python_for_Beginners_E-Certificate.pdf',
   },
   {
     title: 'Web Design for Beginners',
@@ -31,6 +34,7 @@ export const certifications: Certification[] = [
     description: 'Completed the Web Design for Beginners course at the University of Moratuwa, covering HTML5 semantics, CSS3 styling, responsive layouts, and foundational web design principles.',
     skills: ['HTML5', 'CSS3', 'Web Design'],
     image: '/certs/Web_Design_for_Beginners_E-Certificate.png',
+    pdf: '/certs/Web_Design_for_Beginners_E-Certificate.pdf',
   },
   {
     title: 'EF SET Certificate',
@@ -39,5 +43,7 @@ export const certifications: Certification[] = [
     description: 'Achieved C2 Proficient level with a score of 72/100 on the EF Standard English Test, demonstrating advanced proficiency in Reading and Listening.',
     skills: ['English Proficiency', 'C2 Level'],
     image: '/certs/EF SET Certificate.png',
+    pdf: '/certs/EF SET Certificate.pdf',
   },
 ]
+
