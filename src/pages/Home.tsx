@@ -2,9 +2,9 @@ import { useState, useRef } from 'react'
 import Typewriter from '../components/Typewriter'
 import HeroNetworkAnimation from '../components/HeroLightAnimations'
 import LazyGitHubCalendar from '../components/LazyGitHubCalendar'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
-import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList } from 'lucide-react'
+import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList, X } from 'lucide-react'
 import SectionWrapper from '../components/SectionWrapper'
 import SkillsGrid from '../components/skills/SkillsGrid'
 import ProjectCard from '../components/ProjectCard'
@@ -18,6 +18,7 @@ import { certifications } from '../data/certifications'
 export default function Home() {
   const [projectView, setProjectView] = useState<'grid' | 'carousel'>('carousel')
   const [projectsTab, setProjectsTab] = useState<'projects' | 'github'>('projects')
+  const [selectedPdf, setSelectedPdf] = useState<string | null>(null)
   const { theme } = useTheme()
   const heroRef = useRef<HTMLElement>(null)
 
@@ -228,7 +229,10 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
               className="relative flex gap-6"
             >
               <div className="relative mt-1.5 h-3 w-3 shrink-0 rounded-full border-2 border-blue-600 bg-white dark:border-blue-400 dark:bg-gray-950" />
-              <div className="flex-1 rounded-xl border border-gray-200 overflow-hidden transition-colors hover:border-blue-200 dark:border-gray-800 dark:hover:border-blue-800">
+              <div
+                onClick={() => cert.pdf && setSelectedPdf(cert.pdf)}
+                className={`flex-1 rounded-xl border border-gray-200 overflow-hidden transition-all duration-200 hover:border-blue-200 dark:border-gray-800 dark:hover:border-blue-800 ${cert.pdf ? 'cursor-pointer hover:scale-[1.015]' : ''}`}
+              >
                 <div className="flex flex-col sm:flex-row">
                   {/* Text content */}
                   <div className="flex-1 min-w-0 p-6">
@@ -255,8 +259,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
                         src={cert.image}
                         alt={`${cert.title} certificate`}
                         loading="lazy"
-                        className="h-full w-full object-cover cursor-pointer hover:opacity-90 transition-opacity"
-                        onClick={() => window.open(cert.image, '_blank')}
+                        className="h-full w-full object-cover"
                       />
                     </div>
                   )}
