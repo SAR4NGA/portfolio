@@ -177,7 +177,7 @@ export default function Home() {
               alt="Pasindu Saranga — Profile photo"
               width="600"
               loading="lazy"
-              className="w-full max-w-[600px] rounded-2xl object-cover shadow-xl border-4 border-white dark:border-gray-800 transition-transform duration-300 hover:scale-[1.02]"
+              className="w-full max-w-[600px] rounded-2xl object-cover object-top shadow-xl border-4 border-white dark:border-gray-800 transition-transform duration-300 hover:scale-[1.02]"
             />
           </div>
           <div className="space-y-4 text-lg text-gray-800 dark:text-gray-400 leading-relaxed">
