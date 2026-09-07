@@ -106,7 +106,7 @@ export default function Home() {
             speed={40}
             startDelay={2500}
             as="p"
-            className="mb-8 max-w-xl text-lg text-gray-700 dark:text-gray-400 transition-all duration-300"
+            className="mb-8 min-h-[3.5em] max-w-xl text-lg text-gray-700 dark:text-gray-400 transition-all duration-300"
             style={{ fontFamily: '"Outfit", sans-serif' }}
             cursorClassName="bg-gray-700 dark:bg-gray-400"
           />

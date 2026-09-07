@@ -28,6 +28,7 @@ export default function Typewriter({
   const Root = as as 'span'
   const totalLength = segments.reduce((sum, seg) => sum + seg.text.length, 0)
   const [count, setCount] = useState(0)
+  const [started, setStarted] = useState(false)
   const [done, setDone] = useState(false)
   const [hideCursor, setHideCursor] = useState(false)
   const onCompleteRef = useRef(onComplete)
@@ -36,6 +37,7 @@ export default function Typewriter({
   useEffect(() => {
     let interval: number | undefined
     const start = window.setTimeout(() => {
+      setStarted(true)
       interval = window.setInterval(() => {
         setCount((prev) => {
           const next = prev + 1
@@ -77,8 +79,8 @@ export default function Typewriter({
       })}
       <span
         aria-hidden
-        className={`ml-0.5 inline-block h-[1em] w-[2px] translate-y-[0.1em] ${cursorSizeClass ?? ''} ${hideCursor ? '' : 'animate-cursor-blink'} ${cursorClassName ?? ''}`}
-        style={{ opacity: hideCursor ? 0 : 1, transition: 'opacity 0.3s' }}
+        className={`ml-0.5 inline-block h-[1em] w-[2px] translate-y-[0.1em] ${cursorSizeClass ?? ''} ${!started || hideCursor ? '' : 'animate-cursor-blink'} ${cursorClassName ?? ''}`}
+        style={{ opacity: started && !hideCursor ? 1 : 0, transition: 'opacity 0.3s' }}
       />
     </Root>
   )
