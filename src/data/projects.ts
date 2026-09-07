@@ -16,7 +16,6 @@ export const projects: Project[] = [
       "VBScript"
     ],
     github: "https://github.com/SAR4NGA/Network_Monitor",
-    image: "/projects/2fb89045893a3e1805acf219de3bc43e.jpg"
   },
   {
     title: "LiteReader",
@@ -26,7 +25,6 @@ export const projects: Project[] = [
       "Kotlin"
     ],
     github: "https://github.com/SAR4NGA/liteReader",
-    image: "/projects/318f4bbaeec605914fa88e401f8229fe.jpg"
   },
   {
     title: "ADBMS Project",
@@ -39,14 +37,12 @@ export const projects: Project[] = [
       "Dockerfile"
     ],
     github: "https://github.com/SAR4NGA/ADBMS_project",
-    image: "/projects/563ab0af7bfb3b5fd470045f980a1b2d.jpg"
   },
   {
     title: "SAR4NGA.Github.Io",
     description: "Pasindu Saranga's personal GitHub Pages site and portfolio.",
     tech: [],
     github: "https://github.com/SAR4NGA/SAR4NGA.github.io",
-    image: "/projects/5a7da154c5c3985cce7da3eb04b106a4.jpg"
   },
   {
     title: "DeepSeekV4Pro Token Optimizer",
@@ -55,7 +51,6 @@ export const projects: Project[] = [
       "TypeScript"
     ],
     github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer",
-    image: "/projects/8204f5dc904bce4f94a45a6e047ff8eb.jpg"
   },
   {
     title: "Busapp",
@@ -68,7 +63,6 @@ export const projects: Project[] = [
       "Objective-C"
     ],
     github: "https://github.com/SAR4NGA/busapp",
-    image: "/projects/bc37987a5ee6567ded80105f5b84ee21.jpg"
   },
   {
     title: "LiteCordChat",
@@ -80,7 +74,6 @@ export const projects: Project[] = [
       "HTML"
     ],
     github: "https://github.com/SAR4NGA/liteCordChat",
-    image: "/projects/c09329a9973c6fd515cdc7c5f25b606a.jpg"
   },
   {
     title: "Inflex Mobile",
@@ -96,7 +89,6 @@ export const projects: Project[] = [
       "Objective-C"
     ],
     github: "https://github.com/SAR4NGA/inflex_mobile",
-    image: "/projects/d98275d36ad63a9f68e841df1db2d3e4.jpg"
   },
   {
     title: "FinancialTracker",
@@ -108,6 +100,5 @@ export const projects: Project[] = [
       "JavaScript"
     ],
     github: "https://github.com/SAR4NGA/financialTracker",
-    image: "/projects/e4e21e2e4b31e3887135d69bf572bab7.jpg"
   }
 ]
