@@ -9,6 +9,7 @@ import SectionWrapper from '../components/SectionWrapper'
 import SkillsGrid from '../components/skills/SkillsGrid'
 import ProjectCard from '../components/ProjectCard'
 import ProjectCarousel from '../components/ProjectCarousel'
+import ProjectChatbot from '../components/ProjectChatbot'
 import { GithubIcon, LinkedinIcon } from '../components/Icons'
 import { useTheme } from '../hooks/useTheme'
 import { skills } from '../data/skills'
@@ -299,30 +300,7 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
 
         {projectsTab === 'projects' ? (
           <>
-            <div className="mb-6 flex items-center justify-end gap-1">
-              <button
-                onClick={() => setProjectView('grid')}
-                className={`rounded-lg p-2 transition-colors ${
-                  projectView === 'grid'
-                    ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
-                    : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
-                }`}
-                aria-label="Grid view"
-              >
-                <LayoutGrid size={18} />
-              </button>
-              <button
-                onClick={() => setProjectView('carousel')}
-                className={`rounded-lg p-2 transition-colors ${
-                  projectView === 'carousel'
-                    ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
-                    : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300'
-                }`}
-                aria-label="Carousel view"
-              >
-                <LayoutList size={18} />
-              </button>
-            </div>
+
             {projectView === 'carousel' ? (
               <ProjectCarousel projects={projects} />
             ) : (
@@ -332,6 +310,11 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
                 ))}
               </div>
             )}
+
+            {/* Chatbot button — right-aligned below projects */}
+            <div className="mt-8 flex justify-end">
+              <ProjectChatbot />
+            </div>
           </>
         ) : (
           <motion.div
