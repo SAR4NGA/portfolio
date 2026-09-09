@@ -9,24 +9,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: "Network Monitor",
-    description: "A lightweight, unobtrusive desktop network monitoring application for Windows. It provides a transparent, click-through widget to track your upload and download speeds in real-time, coupled with a background Windows service that continually logs data usage.",
-    tech: [
-      "Python",
-      "VBScript"
-    ],
-    github: "https://github.com/SAR4NGA/Network_Monitor",
-  },
-  {
-    title: "LiteReader",
-    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
-    tech: [
-      "HTML",
-      "Kotlin"
-    ],
-    github: "https://github.com/SAR4NGA/liteReader",
-  },
-  {
     title: "ADBMS Project",
     description: "An advanced Budget & Expense Management System with a modern React dashboard and a REST API backed by Microsoft SQL Server. Vaultix helps organizations track expenses, enforce budgets, manage suppliers, run approval workflows, and surface business intelligence with forecasting and anomaly detection.",
     tech: [
@@ -36,44 +18,7 @@ export const projects: Project[] = [
       "HTML",
       "Dockerfile"
     ],
-    github: "https://github.com/SAR4NGA/ADBMS_project",
-  },
-  {
-    title: "SAR4NGA.Github.Io",
-    description: "Pasindu Saranga's personal GitHub Pages site and portfolio.",
-    tech: [],
-    github: "https://github.com/SAR4NGA/SAR4NGA.github.io",
-  },
-  {
-    title: "DeepSeekV4Pro Token Optimizer",
-    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
-    tech: [
-      "TypeScript"
-    ],
-    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer",
-  },
-  {
-    title: "Busapp",
-    description: "A Flutter-based mobile app for real-time bus tracking, route planning, and public transit information. Designed to help commuters find nearby bus stops, track bus locations, and plan their journeys efficiently.",
-    tech: [
-      "Dart",
-      "HTML",
-      "Swift",
-      "Kotlin",
-      "Objective-C"
-    ],
-    github: "https://github.com/SAR4NGA/busapp",
-  },
-  {
-    title: "LiteCordChat",
-    description: "liteCordChat is a high-performance, low-bandwidth voice coordination engine designed for users with limited data quotas and low-end hardware. It provides a \"zero-friction, zero-trace\" experience by eliminating mandatory accounts and social media bloat, focusing strictly on real-time team communication. ",
-    tech: [
-      "TypeScript",
-      "Python",
-      "CSS",
-      "HTML"
-    ],
-    github: "https://github.com/SAR4NGA/liteCordChat",
+    github: "https://github.com/SAR4NGA/ADBMS_project"
   },
   {
     title: "Inflex Mobile",
@@ -88,7 +33,68 @@ export const projects: Project[] = [
       "Kotlin",
       "Objective-C"
     ],
-    github: "https://github.com/SAR4NGA/inflex_mobile",
+    github: "https://github.com/SAR4NGA/inflex_mobile"
+  },
+  {
+    title: "Busapp",
+    description: "A Flutter-based mobile app for real-time bus tracking, route planning, and public transit information. Designed to help commuters find nearby bus stops, track bus locations, and plan their journeys efficiently.",
+    tech: [
+      "Dart",
+      "HTML",
+      "Swift",
+      "Kotlin",
+      "Objective-C"
+    ],
+    github: "https://github.com/SAR4NGA/busapp"
+  },
+  {
+    title: "DeepSeekV4Pro Token Optimizer",
+    description: "Token optimizer for DeepSeek v4 Pro — predicts relevant files, compresses prompts, and tracks token budget. Use when optimizing large context windows or reducing token consumption.",
+    tech: [
+      "TypeScript"
+    ],
+    github: "https://github.com/SAR4NGA/DeepSeekV4Pro-token-optimizer"
+  },
+  {
+    title: "LiteCordChat",
+    description: "liteCordChat is a high-performance, low-bandwidth voice coordination engine designed for users with limited data quotas and low-end hardware. It provides a \"zero-friction, zero-trace\" experience by eliminating mandatory accounts and social media bloat, focusing strictly on real-time team communication. ",
+    tech: [
+      "TypeScript",
+      "Python",
+      "CSS",
+      "HTML"
+    ],
+    github: "https://github.com/SAR4NGA/liteCordChat"
+  },
+  {
+    title: "LiteReader",
+    description: "lightweight Android .docx reader app that renders documents with high fidelity (tables, images, formatting)",
+    tech: [
+      "HTML",
+      "Kotlin"
+    ],
+    github: "https://github.com/SAR4NGA/liteReader"
+  },
+  {
+    title: "Network Monitor",
+    description: "A lightweight, unobtrusive desktop network monitoring application for Windows. It provides a transparent, click-through widget to track your upload and download speeds in real-time, coupled with a background Windows service that continually logs data usage.",
+    tech: [
+      "Python",
+      "VBScript"
+    ],
+    github: "https://github.com/SAR4NGA/Network_Monitor"
+  },
+  {
+    title: "GalleryForPC",
+    description: "",
+    tech: [
+      "JavaScript",
+      "Python",
+      "CSS",
+      "HTML",
+      "Batchfile"
+    ],
+    github: "https://github.com/SAR4NGA/galleryForPC"
   },
   {
     title: "FinancialTracker",
@@ -99,6 +105,6 @@ export const projects: Project[] = [
       "CSS",
       "JavaScript"
     ],
-    github: "https://github.com/SAR4NGA/financialTracker",
+    github: "https://github.com/SAR4NGA/financialTracker"
   }
 ]
