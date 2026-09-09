@@ -267,3 +267,38 @@ body,
 }
 
 
+/* Chatbot typing dots animation */
+@keyframes chatbot-typing {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.chatbot-typing-dot {
+  animation: chatbot-typing 1.4s ease-in-out infinite;
+}
+
+.chatbot-typing-dot-2 {
+  animation-delay: 0.2s;
+}
+
+.chatbot-typing-dot-3 {
+  animation-delay: 0.4s;
+}
+
+/* Chatbot scrollbar */
+.chatbot-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chatbot-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chatbot-scrollbar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+.dark .chatbot-scrollbar::-webkit-scrollbar-thumb {
+  background: #374151;
+}
