@@ -10,7 +10,7 @@ export default function ProjectCard({ project, index }: { project: Project; inde
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className="group rounded-xl border border-gray-200 bg-white p-6 transition-all hover:border-blue-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-950 dark:hover:border-blue-700"
+      className="group rounded-xl border border-gray-200 bg-white p-2 transition-all hover:border-blue-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-950 dark:hover:border-blue-700"
     >
       <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">{project.title}</h3>
       <p className="mb-4 text-base text-gray-600 dark:text-gray-400">{project.description || 'No description yet.'}</p>
