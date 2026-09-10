@@ -4,7 +4,7 @@ import HeroNetworkAnimation from '../components/HeroLightAnimations'
 import LazyGitHubCalendar from '../components/LazyGitHubCalendar'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
-import { ArrowDown, Mail, MapPin, Calendar, LayoutGrid, LayoutList, X } from 'lucide-react'
+import { ArrowDown, Mail, MapPin, Calendar, X } from 'lucide-react'
 import SectionWrapper from '../components/SectionWrapper'
 import SkillsGrid from '../components/skills/SkillsGrid'
 import ProjectCard from '../components/ProjectCard'
@@ -17,7 +17,7 @@ import { projects } from '../data/projects'
 import { certifications } from '../data/certifications'
 
 export default function Home() {
-  const [projectView, setProjectView] = useState<'grid' | 'carousel'>('carousel')
+  const projectView = 'carousel'
   const [projectsTab, setProjectsTab] = useState<'projects' | 'github'>('projects')
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null)
   const { theme } = useTheme()
