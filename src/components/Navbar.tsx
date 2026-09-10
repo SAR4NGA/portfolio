@@ -183,7 +183,7 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-gray-200 px-6 pb-4 pt-2 dark:border-gray-800 md:hidden">
+        <div className="pointer-events-auto border-t border-gray-200 bg-white/80 backdrop-blur-md px-6 pb-4 pt-2 dark:border-gray-800 dark:bg-black/80 md:hidden">
           {navLinks.map(link => {
             const isActive = activeSection === link.id
             return (
