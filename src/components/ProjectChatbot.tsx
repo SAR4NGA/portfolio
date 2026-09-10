@@ -24,6 +24,7 @@ export default function ProjectChatbot() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const lastBotMessageRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const scrollToBottom = useCallback(() => {
@@ -33,9 +34,26 @@ export default function ProjectChatbot() {
     }
   }, [])
 
+  // Scroll to top of bot reply so users read from the beginning
+  const scrollToLastBotMessage = useCallback(() => {
+    const el = lastBotMessageRef.current
+    const container = messagesContainerRef.current
+    if (el && container) {
+      const elTop = el.offsetTop - container.offsetTop
+      container.scrollTo({ top: elTop - 12, behavior: 'smooth' })
+    }
+  }, [])
+
   useEffect(() => {
-    scrollToBottom()
-  }, [messages, isLoading, scrollToBottom])
+    // After a bot message arrives, scroll to its top so the user reads from the start
+    const lastMsg = messages[messages.length - 1]
+    if (lastMsg?.role === 'assistant') {
+      scrollToLastBotMessage()
+    } else {
+      // For user messages and typing indicator, scroll to bottom
+      scrollToBottom()
+    }
+  }, [messages, isLoading, scrollToBottom, scrollToLastBotMessage])
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -199,9 +217,10 @@ export default function ProjectChatbot() {
               )}
 
               {/* Message bubbles */}
-              {messages.map((msg) => (
+              {messages.map((msg, i) => (
                 <motion.div
                   key={msg.id}
+                  ref={msg.role === 'assistant' && i === messages.length - 1 ? lastBotMessageRef : null}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2 }}
