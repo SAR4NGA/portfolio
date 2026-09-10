@@ -248,7 +248,6 @@ export default function ProjectChatbot() {
                 </motion.div>
               )}
 
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Input area */}
