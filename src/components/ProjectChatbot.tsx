@@ -93,7 +93,7 @@ export default function ProjectChatbot() {
       {/* Chat Toggle Button */}
       <motion.button
         onClick={toggleChat}
-        className={`relative overflow-hidden flex items-center gap-2 rounded-full px-5 py-3 font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+        className={`relative overflow-hidden flex items-center gap-2 rounded-full ml-1 px-5 py-3 font-medium shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl ${
           isOpen
             ? 'bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300'
             : 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
@@ -139,7 +139,7 @@ export default function ProjectChatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="absolute bottom-full right-0 z-50 mb-3 flex w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-950 sm:w-[400px]"
+            className="absolute bottom-full left-0 z-50 mb-3 flex w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-950 sm:w-[400px]"
             style={{ height: 'min(520px, calc(100vh - 8rem))' }}
           >
 

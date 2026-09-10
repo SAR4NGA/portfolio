@@ -311,8 +311,8 @@ My work spans web, mobile, and desktop, from Flutter apps to ASP.NET services to
               </div>
             )}
 
-            {/* Chatbot button — right-aligned below projects */}
-            <div className="mt-8 flex justify-end">
+            {/* Chatbot button — left-aligned below projects */}
+            <div className="mt-8 flex justify-start">
               <ProjectChatbot />
             </div>
           </>
