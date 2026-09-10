@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle, X, Send, Sparkles } from 'lucide-react'
+import { MessageCircle, X, Send, Bot } from 'lucide-react'
 import { sendMessage, type ChatMessage } from '../services/groqChat'
 
 interface DisplayMessage {
@@ -10,7 +10,7 @@ interface DisplayMessage {
 }
 
 const SUGGESTIONS = [
-  'What tech does Busapp use?',
+  'What tech does network monitor use?',
   'Tell me about LiteCordChat',
   'Which projects use Flutter?',
   'What is the ADBMS project?',
@@ -142,20 +142,19 @@ export default function ProjectChatbot() {
             className="absolute bottom-full right-0 z-50 mb-3 flex w-[calc(100vw-3rem)] flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-800 dark:bg-gray-950 sm:w-[400px]"
             style={{ height: 'min(520px, calc(100vh - 8rem))' }}
           >
-            {/* Blue accent line */}
-            <div className="absolute top-0 left-0 z-10 h-[2px] w-full bg-gradient-to-r from-blue-500 to-black-400 dark:from-black-500 dark:to-blue-600" />
+
 
             {/* Header */}
             <div className="flex items-center gap-3 border-b border-gray-100 px-4 py-3 dark:border-gray-800/50">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-950/40">
-                <Sparkles size={14} className="text-blue-600 dark:text-blue-400" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-900 dark:bg-white">
+                <Bot size={14} className="text-white dark:text-gray-900" />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                   Project Assistant
                 </h3>
                 <p className="text-xs text-gray-500 dark:text-gray-500">
-                  Powered by AI · Ask anything
+                  Powered with AI · Ask anything
                 </p>
               </div>
               <button
@@ -266,7 +265,7 @@ export default function ProjectChatbot() {
                 <button
                   onClick={() => handleSend()}
                   disabled={!input.trim() || isLoading}
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white transition-all hover:bg-blue-700 disabled:opacity-30 disabled:hover:bg-blue-600"
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-900 text-white transition-all hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 disabled:opacity-30"
                   aria-label="Send message"
                 >
                   <Send size={13} />
